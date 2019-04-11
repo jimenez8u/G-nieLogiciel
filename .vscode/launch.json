@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - JGraphExemple1",
+            "request": "launch",
+            "mainClass": "reseauSocial.dataFormat.JGraphExemple1",
+            "projectName": "reseauSocial"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - JGraphTInterface",
+            "request": "launch",
+            "mainClass": "reseauSocial.dataFormat.JGraphTInterface",
+            "projectName": "reseauSocial"
+        }
+    ]
+}
