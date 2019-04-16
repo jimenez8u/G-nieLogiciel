@@ -6,6 +6,7 @@ public class Link {
 	private LinkProperty[] properties;
 	private SocialNode target;	
 	
+	public Link() {}
 	
 	public Link(String linkName, LinkProperty[] properties, SocialNode target) 
 	{

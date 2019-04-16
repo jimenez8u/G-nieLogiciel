@@ -4,7 +4,11 @@ public class LinkProperty {
 	private String propertyName;
 	private String propertyValue;
 
+	public LinkProperty() 
+	{}
+
 	public LinkProperty(String propertyName, String propertyValue) {
+
 		this.propertyName = propertyName;
 		this.propertyValue = propertyValue;
 	}
