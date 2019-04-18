@@ -1,15 +1,23 @@
 package reseauSocial;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.Test;
+import java.io.IOException;
 
-class dataFormatTest {
+import org.junit.Test;
 
+import reseauSocial.dataFormat.JsonConverter;
+import reseauSocial.dataFormat.LinkProperty;
+
+public class DataFormatTest 
+{
 	@Test
-	void test() {
+	public void JSONConvertionTest() throws IOException 
+	{
+		LinkProperty first = new LinkProperty("premier test", "oui");
+		String json = JsonConverter.convert(first);
+		LinkProperty second = JsonConverter.getLinkProperty(json);
 		
-		fail("Not yet implemented");
+		assertEquals(first.getPropertyName()+first.getPropertyValue(), second.getPropertyName()+second.getPropertyValue());
 	}
-
 }
