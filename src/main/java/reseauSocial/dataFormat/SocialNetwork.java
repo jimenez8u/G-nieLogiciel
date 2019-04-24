@@ -15,4 +15,16 @@ public class SocialNetwork {
 		this.socialNetwork[nbNode] = node;
 		this.nbNode++;
 	}
+	public SocialNode[] getSocialNetwork() {
+		return socialNetwork;
+	}
+	public void setSocialNetwork(SocialNode[] socialNetwork) {
+		this.socialNetwork = socialNetwork;
+	}
+	public int getNbNode() {
+		return nbNode;
+	}
+	public void setNbNode(int nbNode) {
+		this.nbNode = nbNode;
+	}
 }
