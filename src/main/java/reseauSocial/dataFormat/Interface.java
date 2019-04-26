@@ -1,9 +1,18 @@
 package reseauSocial.dataFormat;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 
@@ -12,10 +21,45 @@ public class Interface extends JFrame {
     /** Pour éviter un warning venant du JFrame */
     private static final long serialVersionUID = -8123406571694511514L;
 
-    public Interface(ArrayList<SocialNode> reseau) {
-        super("Affichage du réseau");
+    public Interface() {
+        JFrame frame = new JFrame();
+        JPanel panel = new JPanel();
+        JButton bouton = new JButton("Insert file");
+        bouton.addActionListener(new ActionListener()
+        {
+          public void actionPerformed(ActionEvent e)
+          {
+        	  JFileChooser choix = new JFileChooser();
+        	  int retour=choix.showOpenDialog(panel);
+        	  if(retour==JFileChooser.APPROVE_OPTION){
+        	     // un fichier a été choisi (sortie par OK)
+        	     // nom du fichier  choisi 
+        	     choix.getSelectedFile().getName();
+        	     // chemin absolu du fichier choisi
+        	     choix.getSelectedFile().
+        	            getAbsolutePath();
+        	  }else;// pas de fichier choisi
+          }
+        });
+        panel.add(bouton);
+        getContentPane().add(BorderLayout.SOUTH, panel);
+		setVisible(true);
+        
+    }
 
-        mxGraph graph = new mxGraph();
+    /**
+     * @param args
+     */
+    public static void main(String[] args) {
+        
+        Interface frame = new Interface();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(800, 600);
+        frame.setVisible(true);
+    }
+    
+    public JComponent createGraph(ArrayList<SocialNode> reseau) {
+    	mxGraph graph = new mxGraph();
         Object parent = graph.getDefaultParent();
         HashMap<SocialNode, Object> noeuds = new HashMap<SocialNode, Object>();
         graph.getModel().beginUpdate();
@@ -32,7 +76,7 @@ public class Interface extends JFrame {
         for (SocialNode sn : reseau) {
             if (sn.getLinkList() != null) {
                 for (Link l : sn.getLinkList()) {
-                    graph.insertEdge(parent, null, l.getLinkName() + "\n" + l.getProperties()[0], noeuds.get(sn),
+                    graph.insertEdge(parent, null, l.getLinkName() + "\n" + l.getProperties(), noeuds.get(sn),
                             noeuds.get(l.getTarget()));
                 }
             }
@@ -40,26 +84,6 @@ public class Interface extends JFrame {
         graph.getModel().endUpdate();
         mxGraphComponent graphComponent = new mxGraphComponent(graph);
         graphComponent.setEnabled(false);
-        getContentPane().add(graphComponent);
-    }
-
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        LinkProperty amis = new LinkProperty("since", "1985");
-        LinkProperty[] tprop = { amis };
-        SocialNode catherine = new SocialNode("catherine", null);
-        Link jeancath = new Link("friend", tprop, catherine);
-        Link[] tjeancath = { jeancath };
-        SocialNode jean = new SocialNode("jean", tjeancath);
-
-        ArrayList<SocialNode> reseau = new ArrayList<SocialNode>();
-        reseau.add(jean);
-        reseau.add(catherine);
-        Interface frame = new Interface(reseau);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
-        frame.setVisible(true);
+        return graphComponent;
     }
 }

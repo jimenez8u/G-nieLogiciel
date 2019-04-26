@@ -4,6 +4,7 @@ public class LinkProperty {
 	private String propertyName;
 	private String propertyValue;
 
+
 	public LinkProperty() 
 	{}
 
