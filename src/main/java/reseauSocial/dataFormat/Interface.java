@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
-
-import com.mxgraph.model.mxCell;
-import com.mxgraph.model.mxGeometry;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 
@@ -35,14 +32,14 @@ public class Interface extends JFrame {
         for (SocialNode sn : reseau) {
             if (sn.getLinkList() != null) {
                 for (Link l : sn.getLinkList()) {
-                    graph.insertEdge(parent, null, l.getLinkName() + "\n" + l.getProperties()[0],
-                             noeuds.get(sn) ,noeuds.get(l.getTarget()));
+                    graph.insertEdge(parent, null, l.getLinkName() + "\n" + l.getProperties()[0], noeuds.get(sn),
+                            noeuds.get(l.getTarget()));
                 }
             }
         }
-
+        graph.getModel().endUpdate();
         mxGraphComponent graphComponent = new mxGraphComponent(graph);
-
+        graphComponent.setEnabled(false);
         getContentPane().add(graphComponent);
     }
 
