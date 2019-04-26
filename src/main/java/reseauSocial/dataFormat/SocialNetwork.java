@@ -1,24 +1,25 @@
 package reseauSocial.dataFormat;
 
+import java.util.ArrayList;
+
 public class SocialNetwork {
-	private SocialNode[] socialNetwork;
-	private final int networkSize = 100;
+	private ArrayList<SocialNode> socialNetwork;
 	private int nbNode;
 
 	public SocialNetwork() {
-		this.socialNetwork = new SocialNode[networkSize];
+		this.socialNetwork = new ArrayList<SocialNode>();
 		this.nbNode = 0;
 	}
 	
 	public void addNode(SocialNode node)
 	{
-		this.socialNetwork[nbNode] = node;
+		this.socialNetwork.add(node);
 		this.nbNode++;
 	}
-	public SocialNode[] getSocialNetwork() {
+	public ArrayList<SocialNode> getSocialNetwork() {
 		return socialNetwork;
 	}
-	public void setSocialNetwork(SocialNode[] socialNetwork) {
+	public void setSocialNetwork(ArrayList<SocialNode> socialNetwork) {
 		this.socialNetwork = socialNetwork;
 	}
 	public int getNbNode() {

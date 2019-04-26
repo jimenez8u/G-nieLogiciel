@@ -1,19 +1,20 @@
 package reseauSocial.dataFormat;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class TestMain {
 
 	public static void main(String[] args) throws IOException {
 		
-		LinkProperty propertyList[] = new LinkProperty[1];
-		Link linkList[] = new Link[1];
+		ArrayList<LinkProperty> propertyList = new ArrayList<LinkProperty>();
+		ArrayList<Link> linkList = new ArrayList<Link>();
 		
 		LinkProperty lProperty = new LinkProperty("premier test", "oui");
-		propertyList[0] = lProperty;
-		SocialNode sNJean = new SocialNode("Jean", null);
+		propertyList.add(lProperty);
+		SocialNode sNJean = new SocialNode("Jean");
 		Link sL = new Link("premier lien", propertyList, sNJean);
-		linkList[0] = sL;
+		linkList.add(sL);
 		SocialNode sNJacques = new SocialNode("Jacques", linkList);
 		
 		SocialNetwork sN = new SocialNetwork();

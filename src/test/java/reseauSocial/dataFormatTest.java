@@ -12,7 +12,7 @@ import reseauSocial.dataFormat.LinkProperty;
 public class DataFormatTest 
 {
 	@Test
-	public void JSONConvertionTest() throws IOException 
+	public void jsonLinkPropertyConvertionTest() throws IOException 
 	{
 		LinkProperty first = new LinkProperty("premier test", "oui");
 		String json = JsonConverter.convert(first);
