@@ -44,20 +44,23 @@ public class Interface extends JFrame {
          	     choix.getSelectedFile().getName();
          	     // chemin absolu du fichier choisi
          	     choix.getSelectedFile().
-         	            getAbsolutePath();
+         	     getAbsolutePath();
          	     ArrayList<LinkProperty> propertyList = new ArrayList<LinkProperty>();
          			ArrayList<Link> linkList = new ArrayList<Link>();
-         			
+         			ArrayList<Link> linklist2 = new ArrayList<Link>();
          			LinkProperty lProperty = new LinkProperty("premier test", "oui");
          			propertyList.add(lProperty);
          			SocialNode sNJean = new SocialNode("Jean");
          			Link sL = new Link("premier lien", propertyList, sNJean);
          			linkList.add(sL);
          			SocialNode sNJacques = new SocialNode("Jacques", linkList);
-         			
+         			Link sLL = new Link("deuxieme lien", propertyList, sNJean);
+         			linklist2.add(sLL);
+         			SocialNode sNPatrick = new SocialNode("Patrick",linklist2);
          			SocialNetwork sN = new SocialNetwork();
          			sN.addNode(sNJacques);
          			sN.addNode(sNJean);
+         			sN.addNode(sNPatrick);
          			panelGraph.setSize(400, 400);
          			panelGraph.add(createGraph(sN.getSocialNetwork()));
          			frame.invalidate();
