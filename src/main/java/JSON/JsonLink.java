@@ -1,16 +1,19 @@
-package reseauSocial.dataFormat;
+package JSON;
 
 import java.util.ArrayList;
 
-public class Link {
+import reseauSocial.dataFormat.LinkProperty;
+import reseauSocial.dataFormat.SocialNode;
+
+public class JsonLink {
 	private String linkName;
 	private ArrayList<LinkProperty> properties;
-	private SocialNode noeudDepart;
-	private SocialNode noeudArrive;
+	private String noeudDepart;
+	private String noeudArrive;
 	
-	public Link() {}
+	public JsonLink() {}
 	
-	public Link(String linkName, ArrayList<LinkProperty> properties, SocialNode noeudDepart, SocialNode noeudArrive) {
+	public JsonLink(String linkName, ArrayList<LinkProperty> properties, String noeudDepart, String noeudArrive) {
 		this.properties = new ArrayList<LinkProperty>();
 		this.linkName = linkName;
 		this.properties = properties;
@@ -30,17 +33,16 @@ public class Link {
 	public void setProperties(ArrayList<LinkProperty> properties) {
 		this.properties = properties;
 	}
-	public SocialNode getNoeudDepart() {
+	public String getNoeudDepart() {
 		return noeudDepart;
 	}
-	public void setNoeudDepart(SocialNode target) {
-		this.noeudDepart = target;
+	public void setNoeudDepart(String noeudDepart) {
+		this.noeudDepart = noeudDepart;
 	}
-	public SocialNode getNoeudArrive() {
+	public String getNoeudArrive() {
 		return noeudArrive;
 	}
-	public void setNoeudArrive(SocialNode noeudArrive) {
+	public void setNoeudArrive(String noeudArrive) {
 		this.noeudArrive = noeudArrive;
 	}
-	
 }

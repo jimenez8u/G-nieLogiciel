@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import reseauSocial.dataFormat.JsonConverter;
+import JSON.JsonConverter;
 import reseauSocial.dataFormat.LinkProperty;
 
 public class DataFormatTest 

@@ -1,4 +1,4 @@
-package reseauSocial.dataFormat;
+package JSON;
 
 import java.io.IOException;
 
@@ -6,6 +6,11 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import reseauSocial.dataFormat.Link;
+import reseauSocial.dataFormat.LinkProperty;
+import reseauSocial.dataFormat.SocialNetwork;
+import reseauSocial.dataFormat.SocialNode;
 
 public class JsonConverter {
 	public static String convert(Object o) throws JsonProcessingException
