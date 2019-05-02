@@ -38,4 +38,8 @@ public class SocialNode {
 	{
 		this.linkList = linkList;
 	}
+	public void addLink(Link link)
+	{
+		this.linkList.add(link);
+	}
 }

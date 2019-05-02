@@ -13,8 +13,7 @@ public class TestMain {
 	public static void main(String[] args) throws IOException {
 		
 		ArrayList<LinkProperty> propertyList = new ArrayList<LinkProperty>();
-		ArrayList<Link> linkList = new ArrayList<Link>();
-		ArrayList<JsonLink> jLs= new ArrayList<JsonLink>();
+		JsonSocialNetwork jSN= new JsonSocialNetwork();
 		String sNJean = "Jean";
 		String sNJacques = "Jacques";
 		
@@ -23,10 +22,48 @@ public class TestMain {
 		
 		JsonLink jL = new JsonLink("premier lien", propertyList, sNJean, sNJacques);
 		JsonLink jL2 = new JsonLink("premier lien", propertyList, sNJacques, sNJean);
-		jLs.add(jL);
-		jLs.add(jL2);
+		jSN.addLink(jL);
+		jSN.addLink(jL2);
 		
-		String json = JsonConverter.convert(jLs);
+		String json = JsonConverter.convert(jSN);
 		System.out.println(json);
+		JsonSocialNetwork jSN2 = JsonConverter.getJsonSocialNetwork(json);
+		
+		ArrayList<String> JsonNodeList = new ArrayList<String>();
+		ArrayList<SocialNode> nodeList = new ArrayList<SocialNode>();
+		ArrayList<Link> linkList = new ArrayList<Link>();
+		
+		for ( JsonLink link : jSN2.getLinkList())
+		{
+			SocialNode noeudArrive = new SocialNode(link.getNoeudArrive());
+			SocialNode noeudDepart = new SocialNode(link.getNoeudDepart());
+			if(!nodeList.contains(link.getNoeudArrive()))
+			{
+				JsonNodeList.add(link.getNoeudArrive());
+				nodeList.add(noeudArrive);
+			}
+			if(!nodeList.contains(link.getNoeudDepart()))
+			{
+				JsonNodeList.add(link.getNoeudDepart());
+				nodeList.add(noeudDepart);
+			}
+			linkList.add(new Link(link.getLinkName(), link.getProperties(), noeudDepart, noeudArrive));
+		}
+		
+		//add every links to the right nodes
+		for(SocialNode node : nodeList)
+		{
+			for(Link link : linkList)
+			{
+				if(link.getNoeudArrive().getName() == node.getName())
+					node.addLink(link);
+				else if(link.getNoeudArrive().getName() == node.getName())
+					node.addLink(link);
+			}
+		}
+		
+		SocialNetwork sNetwork = new SocialNetwork();
+		for(SocialNode node : nodeList)
+			sNetwork.addNode(node);
 	}
 }

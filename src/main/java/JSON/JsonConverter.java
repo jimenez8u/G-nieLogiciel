@@ -1,6 +1,7 @@
 package JSON;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,15 +24,15 @@ public class JsonConverter {
 	public static SocialNetwork getSocialNetwork(String str) throws JsonParseException, JsonMappingException, IOException
 	{
 		ObjectMapper Obj = new ObjectMapper();
-		SocialNetwork linkppt = Obj.readValue(str, SocialNetwork.class);
-		return linkppt;
+		SocialNetwork socialNe = Obj.readValue(str, SocialNetwork.class);
+		return socialNe;
 	}
 	
 	public static SocialNode getSocialNode(String str) throws JsonParseException, JsonMappingException, IOException
 	{
 		ObjectMapper Obj = new ObjectMapper();
-		SocialNode linkppt = Obj.readValue(str, SocialNode.class);
-		return linkppt;
+		SocialNode SocialNo = Obj.readValue(str, SocialNode.class);
+		return SocialNo;
 	}
 	
 	public static LinkProperty getLinkProperty(String str) throws JsonParseException, JsonMappingException, IOException
@@ -44,8 +45,14 @@ public class JsonConverter {
 	public static Link getLink(String str) throws JsonParseException, JsonMappingException, IOException
 	{
 		ObjectMapper Obj = new ObjectMapper();
-		Link linkppt = Obj.readValue(str, Link.class);
-		return linkppt;
+		Link link = Obj.readValue(str, Link.class);
+		return link;
 	}
 	
+	public static JsonSocialNetwork getJsonSocialNetwork(String str) throws JsonParseException, JsonMappingException, IOException
+	{
+		ObjectMapper Obj = new ObjectMapper();
+		JsonSocialNetwork arrayJLink = Obj.readValue(str, JsonSocialNetwork.class);
+		return arrayJLink;
+	}
 }
