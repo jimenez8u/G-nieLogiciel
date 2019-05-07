@@ -51,9 +51,9 @@ public class JsonConverter {
 		{
 			for(Link link : linkList)
 			{
-				if(link.getNoeudArrive().getName() == node.getName())
+				if(link.getNoeudArrive().getName().equals(node.getName()))
 					node.addLink(link);
-				else if(link.getNoeudArrive().getName() == node.getName())
+				else if(link.getNoeudArrive().getName().equals(node.getName()))
 					node.addLink(link);
 			}
 		}

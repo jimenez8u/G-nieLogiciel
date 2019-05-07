@@ -80,7 +80,7 @@ public class Interface extends JFrame {
         int i = 1;
         for (SocialNode sn : reseau) {
             try {
-                noeuds.put(sn.getName(), graph.insertVertex(parent, null, sn.getName(), 10 + i, 10, 80, 30));
+                noeuds.put(sn.getName(), graph.insertVertex(parent, null, sn.getName(), (int)(Math.random()*400), (int)(Math.random()*400), 80, 30));
                 i += 200;
             } finally {
                 graph.getModel().endUpdate();
@@ -98,6 +98,7 @@ public class Interface extends JFrame {
         graph.getModel().endUpdate();
         mxGraphComponent graphComponent = new mxGraphComponent(graph);
         graphComponent.setSize(400, 400);
+        graphComponent.setBounds(0, 0, 400, 400);
         graphComponent.setEnabled(true);
         graphComponent.setVisible(true);
         return graphComponent;
