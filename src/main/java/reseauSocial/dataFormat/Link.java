@@ -3,6 +3,7 @@ package reseauSocial.dataFormat;
 import java.util.ArrayList;
 
 public class Link {
+	
 	private String linkName;
 	private ArrayList<LinkProperty> properties;
 	private SocialNode noeudDepart;
@@ -43,4 +44,15 @@ public class Link {
 		this.noeudArrive = noeudArrive;
 	}
 	
+	@Override
+	public String toString() {
+		String str =  "Link [linkName=" + linkName + ", properties=";
+		
+		for(LinkProperty link : properties)
+			str += link.toString() + ", ";
+		
+		str += ", noeudDepart=" + noeudDepart
+				+ ", noeudArrive=" + noeudArrive + "]";
+		return str;
+	}
 }

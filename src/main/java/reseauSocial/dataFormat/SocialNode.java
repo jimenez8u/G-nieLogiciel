@@ -68,4 +68,14 @@ public class SocialNode {
 		return true;
 	}
 
+	public String toString() {
+		String str = "SocialNode [name=" + name + ", linkList=";
+		
+		for(Link link : linkList)
+			str += link.toString() + ", ";
+		
+		str +=  "]";
+		return str;
+	}
+
 }

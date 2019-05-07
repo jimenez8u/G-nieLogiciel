@@ -45,4 +45,16 @@ public class JsonLink {
 	public void setNoeudArrive(String noeudArrive) {
 		this.noeudArrive = noeudArrive;
 	}
+
+	@Override
+	public String toString() {
+		String str = "JsonLink [linkName=" + linkName + ", properties=[";
+		
+		for(LinkProperty link : properties)
+			str += link.toString() + ", ";
+		
+		str += "], noeudDepart=" + noeudDepart
+				+ ", noeudArrive=" + noeudArrive + "]";
+		return str;
+	}
 }

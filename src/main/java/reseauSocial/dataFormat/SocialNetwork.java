@@ -28,4 +28,16 @@ public class SocialNetwork {
 	public void setNbNode(int nbNode) {
 		this.nbNode = nbNode;
 	}
+
+	@Override
+	public String toString() {
+		String str = "SocialNetwork [socialNetwork=";
+		
+		for(SocialNode node : socialNetwork)
+			str += node.toString() + ", ";
+		
+		str += ", nbNode=" + nbNode + "]";
+		return str;
+	
+	}
 }

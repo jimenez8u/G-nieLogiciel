@@ -27,5 +27,17 @@ public class JsonSocialNetwork {
 	{
 		this.linkList.add(link);
 	}
+
+	@Override
+	public String toString() {
+		String str = "JsonSocialNetwork [linkList=";
+		
+		for(JsonLink link : linkList)
+			str += link.toString() +", ";
+	
+		str += "]";
+		
+		return str;
+	}
 	
 }
