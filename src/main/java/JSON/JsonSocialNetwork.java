@@ -2,10 +2,15 @@ package JSON;
 
 import java.util.ArrayList;
 
+import reseauSocial.dataFormat.Link;
+
 public class JsonSocialNetwork {
 	ArrayList<JsonLink> linkList;
 
-	public JsonSocialNetwork() {}
+	public JsonSocialNetwork() 
+	{
+		this.linkList = new ArrayList<JsonLink>();
+	}
 	
 	public JsonSocialNetwork(ArrayList<JsonLink> linkList) {
 		super();
