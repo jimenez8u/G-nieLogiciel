@@ -37,12 +37,12 @@ public class TestMain {
 		{
 			SocialNode noeudArrive = new SocialNode(link.getNoeudArrive());
 			SocialNode noeudDepart = new SocialNode(link.getNoeudDepart());
-			if(!nodeList.contains(link.getNoeudArrive()))
+			if(!JsonNodeList.contains(link.getNoeudArrive()))
 			{
 				JsonNodeList.add(link.getNoeudArrive());
 				nodeList.add(noeudArrive);
 			}
-			if(!nodeList.contains(link.getNoeudDepart()))
+			if(!JsonNodeList.contains(link.getNoeudDepart()))
 			{
 				JsonNodeList.add(link.getNoeudDepart());
 				nodeList.add(noeudDepart);
@@ -65,5 +65,6 @@ public class TestMain {
 		SocialNetwork sNetwork = new SocialNetwork();
 		for(SocialNode node : nodeList)
 			sNetwork.addNode(node);
+		System.out.println(sNetwork.getNbNode());
 	}
 }

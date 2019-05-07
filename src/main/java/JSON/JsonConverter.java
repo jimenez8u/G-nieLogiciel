@@ -23,9 +23,45 @@ public class JsonConverter {
 	
 	public static SocialNetwork getSocialNetwork(String str) throws JsonParseException, JsonMappingException, IOException
 	{
-		ObjectMapper Obj = new ObjectMapper();
-		SocialNetwork socialNe = Obj.readValue(str, SocialNetwork.class);
-		return socialNe;
+		ArrayList<String> JsonNodeList = new ArrayList<String>();
+		ArrayList<SocialNode> nodeList = new ArrayList<SocialNode>();
+		ArrayList<Link> linkList = new ArrayList<Link>();
+		
+		JsonSocialNetwork jSN2 = JsonConverter.getJsonSocialNetwork(str);
+		
+		for ( JsonLink link : jSN2.getLinkList())
+		{
+			SocialNode noeudArrive = new SocialNode(link.getNoeudArrive());
+			SocialNode noeudDepart = new SocialNode(link.getNoeudDepart());
+			if(!JsonNodeList.contains(link.getNoeudArrive()))
+			{
+				JsonNodeList.add(link.getNoeudArrive());
+				nodeList.add(noeudArrive);
+			}
+			if(!JsonNodeList.contains(link.getNoeudDepart()))
+			{
+				JsonNodeList.add(link.getNoeudDepart());
+				nodeList.add(noeudDepart);
+			}
+			linkList.add(new Link(link.getLinkName(), link.getProperties(), noeudDepart, noeudArrive));
+		}
+		
+		//add every links to the right nodes
+		for(SocialNode node : nodeList)
+		{
+			for(Link link : linkList)
+			{
+				if(link.getNoeudArrive().getName() == node.getName())
+					node.addLink(link);
+				else if(link.getNoeudArrive().getName() == node.getName())
+					node.addLink(link);
+			}
+		}
+		
+		SocialNetwork sNetwork = new SocialNetwork();
+		for(SocialNode node : nodeList)
+			sNetwork.addNode(node);
+		return sNetwork;
 	}
 	
 	public static SocialNode getSocialNode(String str) throws JsonParseException, JsonMappingException, IOException
