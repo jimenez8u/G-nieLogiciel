@@ -78,10 +78,17 @@ public class JsonConverter {
 		return linkppt;
 	}
 	
-	public static JsonLink getLink(String str) throws JsonParseException, JsonMappingException, IOException
+	public static JsonLink getJsonLink(String str) throws JsonParseException, JsonMappingException, IOException
 	{
 		ObjectMapper Obj = new ObjectMapper();
 		JsonLink link = Obj.readValue(str, JsonLink.class);
+		return link;
+	}
+	
+	public static Link getLink(String str) throws JsonParseException, JsonMappingException, IOException
+	{
+		ObjectMapper Obj = new ObjectMapper();
+		Link link = Obj.readValue(str, Link.class);
 		return link;
 	}
 	
