@@ -3,6 +3,8 @@ package reseauSocial.dataFormat;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -18,7 +20,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import com.mxgraph.model.mxICell;
 import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxGraph;
 
 import JSON.JsonConverter;
@@ -57,12 +61,12 @@ public class Interface extends JFrame {
          	    	BufferedReader buff = new BufferedReader(lecture);
          	    	String ligne = buff.readLine();
          	    	sN = JsonConverter.getSocialNetwork(ligne);
-         	      	}catch(Exception e1) {e1.printStackTrace();};
-	     		panelGraph.setSize(400, 400);
-				panelGraph.add(createGraph(sN.getSocialNetwork()));
-	     		frame.invalidate();
-	     		frame.validate();
-	     		frame.repaint();
+         	      }catch(Exception e1) {e1.printStackTrace();};
+         	      panelGraph.setSize(800, 800);
+         	      panelGraph.add(createGraph(sN.getSocialNetwork()));
+         	      frame.invalidate();
+         	      frame.validate();
+         	      frame.repaint();
 	     	  }else;// pas de fichier choisi
            }
          });
@@ -80,7 +84,7 @@ public class Interface extends JFrame {
         int i = 1;
         for (SocialNode sn : reseau) {
             try {
-                noeuds.put(sn.getName(), graph.insertVertex(parent, null, sn.getName(), (int)(Math.random()*400), (int)(Math.random()*400), 80, 30));
+                noeuds.put(sn.getName(), graph.insertVertex(parent, null, sn.getName(), (int)(Math.random()*800), (int)(Math.random()*400), 80, 30));
                 i += 200;
             } finally {
                 graph.getModel().endUpdate();
@@ -90,17 +94,21 @@ public class Interface extends JFrame {
         for (SocialNode sn : reseau) {
             if (sn.getLinkList() != null) {
                 for (Link l : sn.getLinkList()) {
-                    graph.insertEdge(parent, null, l.getLinkName() + "\n" + l.getProperties(), noeuds.get(l.getNoeudDepart().getName()),
-                            noeuds.get(l.getNoeudArrive().getName()));
+                	if (l.getNoeudDepart().equals(sn)) {
+                		System.out.println(l.getLinkName());
+                		Object lien =  graph.insertEdge(parent, null, l.getLinkName() + "\n" + l.getProperties(), noeuds.get(l.getNoeudDepart().getName()),
+                				noeuds.get(l.getNoeudArrive().getName()));
+                	}
                 }
             }
         }
-        graph.getModel().endUpdate();
+        graph.getModel().endUpdate(); 
         mxGraphComponent graphComponent = new mxGraphComponent(graph);
-        graphComponent.setSize(400, 400);
-        graphComponent.setBounds(0, 0, 400, 400);
+        graphComponent.setSize(800, 800);
+        graphComponent.setBounds(0, 0, 800, 800);
         graphComponent.setEnabled(true);
         graphComponent.setVisible(true);
+        
         return graphComponent;
     }
 }
