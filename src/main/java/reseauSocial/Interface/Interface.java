@@ -45,7 +45,6 @@ public class Interface extends JFrame implements ActionListener {
 	public JPanel panel;
 	public JFrame frame;
 	public String typeParcours = "largeur";
-
 	private SocialNetwork sn;
 
 	
@@ -170,7 +169,6 @@ public class Interface extends JFrame implements ActionListener {
 			String nodeName = texte.getText();
 			this.panelGraph.remove(0);
 			panelGraph.add(createGraph(Parcours.parcoursLargeur(sn.getNodeByName(nodeName));
-			//A finir
 		}
 	}
 
