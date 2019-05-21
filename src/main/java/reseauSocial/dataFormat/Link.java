@@ -51,8 +51,8 @@ public class Link {
 		for(LinkProperty link : properties)
 			str += link.toString() + ", ";
 		
-		str += ", noeudDepart=" + noeudDepart
-				+ ", noeudArrive=" + noeudArrive + "]";
+		str += ", noeudDepart=" + noeudDepart.getName()
+				+ ", noeudArrive=" + noeudArrive.getName() + "]";
 		return str;
 	}
 }

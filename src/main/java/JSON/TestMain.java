@@ -66,5 +66,6 @@ public class TestMain {
 		for(SocialNode node : nodeList)
 			sNetwork.addNode(node);
 		System.out.println(sNetwork.getNbNode());
+		System.out.println(sNetwork.toString());
 	}
 }
