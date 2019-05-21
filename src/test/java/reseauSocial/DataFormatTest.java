@@ -140,8 +140,10 @@ public class DataFormatTest
 		json = br.readLine();
 		br.close();
 		
+
 		SocialNetwork sNw = JsonConverter.getSocialNetwork(json);
 		
 		assertEquals(sNw.getNodeByName("4").getName(), "4");
+
 	}
 }
