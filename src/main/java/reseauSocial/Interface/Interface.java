@@ -35,6 +35,7 @@ import JSON.JsonConverter;
 import reseauSocial.dataFormat.Link;
 import reseauSocial.dataFormat.SocialNetwork;
 import reseauSocial.dataFormat.SocialNode;
+import reseauSocial.parcours.Parcours;
 
 public class Interface extends JFrame implements ActionListener {
 
@@ -114,9 +115,7 @@ public class Interface extends JFrame implements ActionListener {
 			nodeMap.put(sn.getName(), graph.insertVertex(parent, null, sn.getName(), (int) (Math.random() * 800),
 					(int) (Math.random() * 400), 80, 30));
 		}
-
 		return nodeMap;
-
 	}
 
 	public static void addLinkToGraph(ArrayList<SocialNode> reseau, HashMap<String, Object> nodeMap, mxGraph graph) {
@@ -162,12 +161,15 @@ public class Interface extends JFrame implements ActionListener {
 		else if("profondeur".equals(e.getActionCommand())){
 			this.typeParcours = "pronfondeur";
 		}
-		else if("recherche".equals(e.getActionCommand())) {
+		else if("Recherche".equals(e.getActionCommand())) {
 			this.panelGraph.remove(0);
 			JTextField texte = (JTextField) this.panelRecherche.getComponent(1);
 			String nodeName = texte.getText();
-			this.panelGraph.remove(0);
-			panelGraph.add(createGraph(Parcours.parcoursLargeur(sn.getNodeByName(nodeName));
+			SocialNode node = this.sn.getNodeByName(nodeName);
+			ArrayList<SocialNode> listnode = (ArrayList<SocialNode>) Parcours.parcoursLargeur(node);
+			System.out.println(listnode.size());
+			this.panelGraph.add((createGraph((ArrayList<SocialNode>) listnode)));
+			
 		}
 	}
 
@@ -187,18 +189,18 @@ public class Interface extends JFrame implements ActionListener {
 				InputStreamReader lecture = new InputStreamReader(flux);
 				BufferedReader buff = new BufferedReader(lecture);
 				String ligne = buff.readLine();
-				sn = sN;
 				sN = JsonConverter.getSocialNetwork(ligne);
+				this.sn = sN;
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 			;
-			panelGraph.setSize(800, 800);
-			panelGraph.add(createGraph(sN.getSocialNetwork()));
-			panelRecherche.setVisible(true);
-			frame.invalidate();
-			frame.validate();
-			frame.repaint();
+			this.panelGraph.setSize(800, 800);
+			this.panelGraph.add(createGraph(sN.getSocialNetwork()));
+			this.panelRecherche.setVisible(true);
+			this.frame.invalidate();
+			this.frame.validate();
+			this.frame.repaint();
 		} else
 			;// pas de fichier choisi
 	}

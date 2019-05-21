@@ -51,11 +51,17 @@ public class JsonConverter {
 		{
 			for(Link link : linkList)
 			{
-				if(link.getNoeudArrive().getName().equals(node.getName()))
+				if(link.getNoeudArrive().getName().equals(node.getName())) { 
+					link.setNoeudArrive(node);
 					node.addLink(link);
-				else if(link.getNoeudDepart().getName().equals(node.getName()))
+					}
+					
+				else if(link.getNoeudDepart().getName().equals(node.getName())) {
+					link.setNoeudDepart(node);
 					node.addLink(link);
+					}
 			}
+			
 		}
 		
 		SocialNetwork sNetwork = new SocialNetwork();
