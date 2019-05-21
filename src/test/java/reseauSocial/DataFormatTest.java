@@ -101,7 +101,7 @@ public class DataFormatTest
 	@Test
 	public void jsonNoeudDepartTest() throws IOException
 	{
-		File file = new File("F:\\PC\\Dowloads\\graphetest.txt"); 
+		File file = new File("files/graphetest.txt");
 		BufferedReader br = new BufferedReader(new FileReader(file)); 
 		String json ="";
 		json = br.readLine();
@@ -118,7 +118,7 @@ public class DataFormatTest
 	@Test
 	public void jsonNoeudArriveTest() throws IOException
 	{
-		File file = new File("F:\\PC\\Dowloads\\graphetest.txt"); 
+		File file = new File("files/graphetest.txt");
 		BufferedReader br = new BufferedReader(new FileReader(file)); 
 		String json ="";
 		json = br.readLine();
@@ -129,5 +129,17 @@ public class DataFormatTest
 		SocialNode sn = sNw.getSocialNetwork().get(2);
 		
 		assertEquals(sn.toString(), sn.getLinkList().get(0).getNoeudArrive().toString());
+	}
+	
+	@Test
+	public void getNodeByNameTest() throws IOException
+	{
+		File file = new File("files/graphetest.txt");
+		BufferedReader br = new BufferedReader(new FileReader(file)); 
+		String json ="";
+		json = br.readLine();
+		br.close();
+		
+		
 	}
 }
