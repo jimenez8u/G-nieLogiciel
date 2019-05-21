@@ -45,6 +45,7 @@ public class Interface extends JFrame implements ActionListener {
 	public JPanel panel;
 	public JFrame frame;
 	public String typeParcours = "largeur";
+	private SocialNetwork sn;
 	
 
 	/**
@@ -162,7 +163,11 @@ public class Interface extends JFrame implements ActionListener {
 			this.typeParcours = "pronfondeur";
 		}
 		else if("recherche".equals(e.getActionCommand())) {
-			//A finir
+			this.panelGraph.remove(0);
+			JTextField texte = (JTextField) this.panelRecherche.getComponent(1);
+			String nodeName = texte.getText();
+			this.panelGraph.remove(0);
+			panelGraph.add(createGraph(Parcours.parcoursLargeur(sn.getNodeByName(nodeName));
 		}
 	}
 
@@ -182,6 +187,7 @@ public class Interface extends JFrame implements ActionListener {
 				InputStreamReader lecture = new InputStreamReader(flux);
 				BufferedReader buff = new BufferedReader(lecture);
 				String ligne = buff.readLine();
+				sn = sN;
 				sN = JsonConverter.getSocialNetwork(ligne);
 			} catch (Exception e1) {
 				e1.printStackTrace();
