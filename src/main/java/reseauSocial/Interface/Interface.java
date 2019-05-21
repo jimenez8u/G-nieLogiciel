@@ -46,7 +46,7 @@ public class Interface extends JFrame implements ActionListener {
 	public JFrame frame;
 	public String typeParcours = "largeur";
 	private SocialNetwork sn;
-	
+
 
 	/**
 	 * @param args
