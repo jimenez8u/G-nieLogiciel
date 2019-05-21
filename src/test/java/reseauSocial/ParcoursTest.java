@@ -42,5 +42,16 @@ class ParcoursTest {
 		listTest = p.parcoursLargeur(sN.getSocialNetwork().get(index));
 		assertEquals(listResult, listTest);
 	}
+	
+	@Test
+	void longueurOrdreTest() throws JsonParseException, JsonMappingException, IOException  {
+		List<SocialNode> listResult = Arrays.asList(s1,s2,s3,s4,s5);
+		List<SocialNode> listTest;
+		SocialNetwork sN = JsonConverter.getSocialNetwork(GRAPHSTRING);
+		Parcours p = new Parcours();
+		int index = sN.getSocialNetwork().indexOf(s1);
+		listTest = p.parcoursProfondeur(sN.getSocialNetwork().get(index));
+		assertEquals(listResult, listTest);
+	}
 
 }
