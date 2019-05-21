@@ -40,4 +40,16 @@ public class SocialNetwork {
 		return str;
 	
 	}
+	
+	public SocialNode getNodeByName(String name)
+	{
+		for(SocialNode node : this.socialNetwork)
+		{
+			if(node.getName() == name)
+			{
+				return node;
+			}
+		}
+		return null;
+	}
 }
