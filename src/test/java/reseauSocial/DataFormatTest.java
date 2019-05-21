@@ -2,6 +2,9 @@ package reseauSocial;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -93,5 +96,38 @@ public class DataFormatTest
 		JsonLink second = JsonConverter.getJsonLink(json);
 		
 		assertEquals(first.toString(), second.toString());
+	}
+	
+	@Test
+	public void jsonNoeudDepartTest() throws IOException
+	{
+		File file = new File("F:\\PC\\Dowloads\\graphetest.txt"); 
+		BufferedReader br = new BufferedReader(new FileReader(file)); 
+		String json ="";
+		json = br.readLine();
+		br.close();
+		
+		SocialNetwork sNw = JsonConverter.getSocialNetwork(json);
+		
+		SocialNode sn = sNw.getSocialNetwork().get(2);
+		SocialNode sn2 = sNw.getSocialNetwork().get(0);
+		
+		assertEquals(sn2.toString(), sn.getLinkList().get(0).getNoeudDepart().toString());
+	}
+	
+	@Test
+	public void jsonNoeudArriveTest() throws IOException
+	{
+		File file = new File("F:\\PC\\Dowloads\\graphetest.txt"); 
+		BufferedReader br = new BufferedReader(new FileReader(file)); 
+		String json ="";
+		json = br.readLine();
+		br.close();
+		
+		SocialNetwork sNw = JsonConverter.getSocialNetwork(json);
+		
+		SocialNode sn = sNw.getSocialNetwork().get(2);
+		
+		assertEquals(sn.toString(), sn.getLinkList().get(0).getNoeudArrive().toString());
 	}
 }
