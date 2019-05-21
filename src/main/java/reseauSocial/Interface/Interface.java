@@ -1,34 +1,24 @@
 package reseauSocial.Interface;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComponent;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-
-import com.mxgraph.model.mxICell;
 import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.view.mxCellState;
 import com.mxgraph.view.mxGraph;
 
 import JSON.JsonConverter;
@@ -165,11 +155,15 @@ public class Interface extends JFrame implements ActionListener {
 			this.panelGraph.remove(0);
 			JTextField texte = (JTextField) this.panelRecherche.getComponent(1);
 			String nodeName = texte.getText();
+			System.out.println(nodeName);
 			SocialNode node = this.sn.getNodeByName(nodeName);
+			System.out.println(node);
 			ArrayList<SocialNode> listnode = (ArrayList<SocialNode>) Parcours.parcoursLargeur(node);
 			System.out.println(listnode.size());
 			this.panelGraph.add((createGraph((ArrayList<SocialNode>) listnode)));
-			
+			this.frame.invalidate();
+			this.frame.validate();
+			this.frame.repaint();
 		}
 	}
 

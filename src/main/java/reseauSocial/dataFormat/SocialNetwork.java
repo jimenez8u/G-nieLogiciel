@@ -45,7 +45,7 @@ public class SocialNetwork {
 	{
 		for(SocialNode node : this.socialNetwork)
 		{
-			if(node.getName() == name)
+			if(node.getName().equals(name))
 			{
 				return node;
 			}
