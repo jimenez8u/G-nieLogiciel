@@ -132,6 +132,7 @@ public class Interface extends JFrame implements ActionListener {
 	public static Map<String, Object> addNodeToGraph(List<SocialNode> reseau, mxGraph graph) {
 		Object parent = graph.getDefaultParent();
 		Map<String, Object> nodeMap = new HashMap<>();
+		Random r = new Random();
 		for (SocialNode sn : reseau) {
 			nodeMap.put(sn.getName(), graph.insertVertex(parent, null, sn.getName(), r.nextInt(800),
 					r.nextInt(400), 80, 30));
