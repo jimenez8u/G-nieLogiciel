@@ -24,6 +24,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 import json.JsonConverter;
@@ -52,6 +55,13 @@ public class Interface extends JFrame implements ActionListener {
 	 * @param args
 	 */
 	public Interface() {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.sn = new SocialNetwork();
 		this.panelGraph = new JPanel();
 		this.panelRecherche = createToolbar();
