@@ -1,6 +1,7 @@
 package reseauSocial.Interface;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -10,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -34,13 +35,14 @@ import reseauSocial.parcours.Parcours;
 public class Interface extends JFrame implements ActionListener {
 
 	/** Pour éviter un warning venant du JFrame */
+	private static Random r = new Random();
 	private static final long serialVersionUID = -8123406571694511514L;
 	private JPanel panelGraph;
 	private JPanel panelRecherche;
 	private JPanel panel;
 	private JFrame frame;
-	private String typeParcours = "largeur";
 	private SocialNetwork sn;
+	private static Logger logger = Logger.getLogger(Interface.class.getName());
 
 
 	/**
@@ -51,9 +53,11 @@ public class Interface extends JFrame implements ActionListener {
 		this.panelGraph = new JPanel();
 		this.panelRecherche = createToolbar();
 		this.panelRecherche.setVisible(false);
+		this.panelRecherche.setSize(400,400);
 		this.frame = new JFrame();
 		this.frame.setVisible(true);
 		this.frame.setSize(1200, 600);
+		this.frame.setLocationRelativeTo(null);
 		this.panel = new JPanel();
 		JButton bouton = new JButton("Insert file");
 		bouton.setActionCommand("readFile");
@@ -63,7 +67,7 @@ public class Interface extends JFrame implements ActionListener {
 		
 		this.frame.getContentPane().add(BorderLayout.SOUTH, panel);
 		this.frame.getContentPane().add(BorderLayout.NORTH, panelGraph);
-		this.frame.getContentPane().add(BorderLayout.CENTER, panelRecherche);
+		this.frame.add(panelRecherche);
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
@@ -75,7 +79,7 @@ public class Interface extends JFrame implements ActionListener {
 		nom.setColumns(8);
 		panelToolbar.add(nomNoeud);
 		panelToolbar.add(nom);
-		panelToolbar.setSize(200,200);
+		panelToolbar.setSize(300,300);
 		JRadioButton profondeur = new JRadioButton("Profondeur");
 		profondeur.setActionCommand("parcoursProfondeur");
 		JRadioButton largeur = new JRadioButton("Largeur");
@@ -85,10 +89,8 @@ public class Interface extends JFrame implements ActionListener {
 		group.add(profondeur);
 		group.add(largeur);
 		
-		
 		JButton btn = new JButton("Rechercher");
 		btn.setActionCommand("Recherche");
-		
 		JLabel labelProfondeur = new JLabel("Niv. Profondeur :");
 		JSpinner textProfondeur = new JSpinner();
 		JComponent editor = textProfondeur.getEditor();
@@ -103,16 +105,33 @@ public class Interface extends JFrame implements ActionListener {
 		profondeur.addActionListener(this);
 		btn.addActionListener(this);
 		
+		JButton filtre = new JButton("Ajouter filtre");
+		filtre.setActionCommand("ajouterFiltre");
+		filtre.addActionListener(this);
+		
+		
 		panelToolbar.add(profondeur);
 		panelToolbar.add(largeur);
+		panelToolbar.add(filtre);
 		panelToolbar.add(btn);
-		return panelToolbar;
+		/**
+		JPanel filtre = new JPanel();
+		JLabel labelLien1 = new JLabel("Lien 1 :");
+		JTextField textLien1 = new JTextField();
+		JLabel labelValeur1 = new JLabel("Valeur 1 :");
+		JTextField textValeur1 = new JTextField();
+		filtre.add(labelLien1);
+		filtre.add(textLien1);
+		filtre.add(labelValeur1);
+		filtre.add(textValeur1);
+		panelToolbar.add(filtre);
+		**/
+		return panelToolbar; 
 	}
 
 	public static Map<String, Object> addNodeToGraph(List<SocialNode> reseau, mxGraph graph) {
 		Object parent = graph.getDefaultParent();
 		Map<String, Object> nodeMap = new HashMap<>();
-		Random r = new Random();
 		for (SocialNode sn : reseau) {
 			nodeMap.put(sn.getName(), graph.insertVertex(parent, null, sn.getName(), r.nextInt(800),
 					r.nextInt(400), 80, 30));
@@ -141,8 +160,6 @@ public class Interface extends JFrame implements ActionListener {
 		addLinkToGraph(reseau, nodeMap, graph);
 		graph.getModel().endUpdate();
 		mxGraphComponent graphComponent = new mxGraphComponent(graph);
-		graphComponent.setSize(800, 800);
-		graphComponent.setBounds(0, 0, 800, 800);
 		graphComponent.setEnabled(true);
 		graphComponent.setVisible(true);
 
@@ -155,21 +172,16 @@ public class Interface extends JFrame implements ActionListener {
 			try {
 				readFile();
 			} catch (IOException e1) {
-				e1.printStackTrace();
+				logger.severe("Erreur lecture fichier");
 			}
 		}
-		else if("parcoursLargeur".equals(e.getActionCommand())){
-			this.typeParcours = "largeur";
-		}
-		else if("parcoursProfondeur".equals(e.getActionCommand())){
-			this.typeParcours = "pronfondeur";
-		}
 		else if("Recherche".equals(e.getActionCommand())) {
+			boolean isProfondeur = ((JRadioButton) panelRecherche.getComponent(4)).isSelected();
 			JTextField texte = (JTextField) this.panelRecherche.getComponent(1);
 			int profondeur = (int) ((JSpinner) this.panelRecherche.getComponent(3)).getValue();
 			String nodeName = texte.getText();
 			SocialNode node = this.sn.getNodeByName(nodeName);
-			if(typeParcours.equals("largeur")) {
+			if(!isProfondeur) {
 				if (node == null) {
 					JOptionPane.showMessageDialog(null, "Le noeud "+nodeName+" n'existe pas.", "Erreur de noeud", JOptionPane.ERROR_MESSAGE);
 				}
@@ -196,6 +208,11 @@ public class Interface extends JFrame implements ActionListener {
 				}
 				
 			}
+		}
+		else if("ajouterFiltre".equals(e.getActionCommand())) {
+			JOptionPaneFiltre filtrage = new JOptionPaneFiltre();
+			System.out.println(filtrage.getCondition().size());
+			
 		}
 	}
 
