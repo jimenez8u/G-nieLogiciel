@@ -11,9 +11,10 @@ import reseauSocial.dataFormat.SocialNode;
 public class Parcours {
 	
 	//parcours largeur d'abord
-	public static List<SocialNode> parcoursLargeur(SocialNode noeud) {
+	public static List<SocialNode> parcoursLargeur(SocialNode noeud, int profondeurRecherche) {
 		List<SocialNode> noeudsVisites = new ArrayList<>();
 		Deque<SocialNode> noeudsSuivants = new LinkedList<>();
+		int nbNoeudsEtage;
 		
 		noeudsVisites.add(noeud);
 		for (Link lien : noeud.getLinkList()) {
@@ -25,11 +26,16 @@ public class Parcours {
 			}
 		}
 		
-		
+		nbNoeudsEtage = noeudsSuivants.size();
 		SocialNode noeudSuivant;
-		
-		while (noeudsSuivants.peekFirst() != null) {
+		while (noeudsSuivants.peekFirst() != null && profondeurRecherche > 0) {
 			noeudSuivant = noeudsSuivants.pollFirst();
+			
+			nbNoeudsEtage --;
+			if (nbNoeudsEtage == 0) {
+				profondeurRecherche --;
+				nbNoeudsEtage = noeudsSuivants.size();
+			}
 			
 			for (Link lien : noeudSuivant.getLinkList()) {
 				SocialNode noeudAAjouter;
@@ -48,9 +54,10 @@ public class Parcours {
 			if(!noeudsVisites.contains(noeudSuivant)) {
 				noeudsVisites.add(noeudSuivant);
 			}
+			
+			
 				
 		}
-		
 		return noeudsVisites;
 	}
 	
