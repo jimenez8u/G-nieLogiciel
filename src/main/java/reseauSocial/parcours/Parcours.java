@@ -62,18 +62,18 @@ public class Parcours {
 	}
 	
 	//parcours profondeur d'abord
-	public static List<SocialNode> parcoursProfondeur(SocialNode noeud) {
+	public static List<SocialNode> parcoursProfondeur(SocialNode noeud, int profondeurRecherche) {
 		
 		List<SocialNode> noeudsVisites = new ArrayList<>();
-		return parcoursProfondeurRec(noeud,noeudsVisites);
+		return parcoursProfondeurRec(noeud,noeudsVisites,profondeurRecherche);
 		
 	}
 	
-	private static List<SocialNode> parcoursProfondeurRec(SocialNode noeud, List<SocialNode> noeudsVisites) {
+	private static List<SocialNode> parcoursProfondeurRec(SocialNode noeud, List<SocialNode> noeudsVisites, int profondeurRecherche) {
 		List<SocialNode> noeudsResult = new ArrayList<>();
 		Deque<SocialNode> noeudsSuivants = new LinkedList<>();
 		
-		if(!noeudsVisites.contains(noeud)) {
+		if(!noeudsVisites.contains(noeud) && profondeurRecherche >=0) {
 			noeudsVisites.add(noeud);
 			noeudsResult.add(noeud);
 			
@@ -92,7 +92,7 @@ public class Parcours {
 
 			while(noeudsSuivants.peekFirst() != null) {
 				
-				noeudsResult.addAll(parcoursProfondeurRec(noeudsSuivants.pollFirst(), noeudsVisites));
+				noeudsResult.addAll(parcoursProfondeurRec(noeudsSuivants.pollFirst(), noeudsVisites,profondeurRecherche -1));
 			}
 			return noeudsResult;
 		}
