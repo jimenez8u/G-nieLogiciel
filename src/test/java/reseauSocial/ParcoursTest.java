@@ -31,6 +31,7 @@ class ParcoursTest {
 			+ "{\"linkName\":\"l5\",\"properties\":[{\"propertyName\":\"l5\",\"propertyValue\":\"oui\"}],\"noeudDepart\":\"4\",\"noeudArrive\":\"5\"},"
 			+ "{\"linkName\":\"l6\",\"properties\":[{\"propertyName\":\"l6\",\"propertyValue\":\"oui\"}],\"noeudDepart\":\"1\",\"noeudArrive\":\"5\"}]}";
 
+
 	private List<SocialNode> listTest;
 	
 	private static int index1;
@@ -43,6 +44,7 @@ class ParcoursTest {
 	private static SocialNode s5;
 	private static SocialNode s8;
 	private static SocialNode s9;
+
 
 	private static File file;
 	private static BufferedReader br;
@@ -62,7 +64,7 @@ class ParcoursTest {
 		s5 = new SocialNode("5");
 		s8 = new SocialNode("8");
 		s9 = new SocialNode("9");
-		
+
 		file = new File("files/graphetest.txt");
 		br = new BufferedReader(new FileReader(file));
 		graph2 = br.readLine();
@@ -88,6 +90,7 @@ class ParcoursTest {
 		result = Arrays.asList(s1,s2,s5,s8,s3,s4,s9);
 		listTest = Parcours.parcoursLargeur(sN2.getSocialNetwork().get(index2),100);
 		assertEquals(result, listTest);
+
 	}
 
 	@Test
@@ -116,6 +119,7 @@ class ParcoursTest {
 		result = Arrays.asList(s1,s2,s5,s8);
 		listTest = Parcours.parcoursLargeur(sN2.getSocialNetwork().get(index2),1);
 		assertEquals(result, listTest);
+
 	}
 
 	
