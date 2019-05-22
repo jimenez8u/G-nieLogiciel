@@ -149,6 +149,7 @@ class ParcoursTest {
 	void ProfondeurDabordProfondeurDeux() {
 		result = Arrays.asList(s1,s2,s3,s4,s5,s8,s9);
 		listTest = Parcours.parcoursProfondeur(sN2.getSocialNetwork().get(index2),2,null);
+<<<<<<< HEAD
 		assertEquals(result, listTest);
 	}
 	
@@ -224,4 +225,82 @@ class ParcoursTest {
 		assertEquals(result, listTest);
 	}
 	
+=======
+		assertEquals(result, listTest);
+	}
+	
+	@Test
+	void testCheckConditionNoProperties() {
+		Condition condition = new Condition("l1", null);
+		conditions.add(condition);
+		Link link = sN2.getNodeByName("1").getLinkList().get(0);
+		assertTrue(Parcours.checkConditions(link, conditions));
+	}
+	
+	
+	@Test
+	void testCheckConditionFound(){
+		List<LinkProperty> properties = new ArrayList<>();
+		properties.add(new LinkProperty("p1", "oui"));
+		Condition condition = new Condition("l1", properties);
+		conditions.add(condition);
+		Link link = sN2.getNodeByName("1").getLinkList().get(0);
+		
+		assertTrue(Parcours.checkConditions(link, conditions));
+	}
+	
+	@Test
+	void testCheckConditionNotFound(){
+		List<LinkProperty> properties = new ArrayList<>();
+		properties.add(new LinkProperty("p1", "non"));
+		Condition condition = new Condition("l1", properties);
+		conditions.clear();
+		conditions.add(condition);
+		Link link = sN2.getNodeByName("1").getLinkList().get(0);
+		
+		assertFalse(Parcours.checkConditions(link, conditions));
+	}
+	
+	@Test
+	void testCheckMultipleConditionsFalse(){
+		List<LinkProperty> properties = new ArrayList<>();
+		properties.add(new LinkProperty("p1", "non"));
+		properties.add(new LinkProperty("p2", "oui"));
+		Condition condition = new Condition("l1", properties);
+		Condition condition2 = new Condition("l3",null);
+		conditions.clear();
+		conditions.add(condition);
+		conditions.add(condition2);
+		Link link = sN2.getNodeByName("1").getLinkList().get(0);
+		
+		assertFalse(Parcours.checkConditions(link, conditions));
+	}
+	
+	@Test
+	void testCheckMultipleConditionsTrue(){
+		List<LinkProperty> properties = new ArrayList<>();
+		properties.add(new LinkProperty("p1", "oui"));
+		properties.add(new LinkProperty("p2", "oui"));
+		Condition condition = new Condition("l1", properties);
+		Condition condition2 = new Condition("l3",null);
+		conditions.clear();
+		conditions.add(condition);
+		conditions.add(condition2);
+		Link link = sN2.getNodeByName("1").getLinkList().get(0);
+		
+		assertTrue(Parcours.checkConditions(link, conditions));
+	}
+	
+	@Test
+	void testParcoursLargeurDabordCondition() {
+		result = Arrays.asList(s1,s2);
+		conditions.clear();
+		Condition condition = new Condition("l1", null);
+		conditions.add(condition);
+		listTest = Parcours.parcoursProfondeur(sN2.getSocialNetwork().get(index2),2,conditions);
+		assertEquals(result, listTest);
+	}
+	
+
+>>>>>>> Interface
 }

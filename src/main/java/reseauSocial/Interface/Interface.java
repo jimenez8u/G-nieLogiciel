@@ -30,6 +30,7 @@ import json.JsonConverter;
 import reseauSocial.dataFormat.Link;
 import reseauSocial.dataFormat.SocialNetwork;
 import reseauSocial.dataFormat.SocialNode;
+import reseauSocial.parcours.Condition;
 import reseauSocial.parcours.Parcours;
 
 public class Interface extends JFrame implements ActionListener {
@@ -43,6 +44,8 @@ public class Interface extends JFrame implements ActionListener {
 	private JFrame frame;
 	private SocialNetwork sn;
 	private static Logger logger = Logger.getLogger(Interface.class.getName());
+	private static List<Condition> cdt = null;
+
 
 
 	/**
@@ -187,7 +190,7 @@ public class Interface extends JFrame implements ActionListener {
 				}
 				else {
 					this.panelGraph.remove(0);
-					List<SocialNode> listnode = Parcours.parcoursLargeur(node,profondeur);
+					List<SocialNode> listnode = Parcours.parcoursLargeur(node,profondeur,cdt);
 					this.panelGraph.add((createGraph(listnode)));
 					this.frame.invalidate();
 					this.frame.validate();
@@ -200,7 +203,7 @@ public class Interface extends JFrame implements ActionListener {
 				}
 				else {
 					this.panelGraph.remove(0);
-					List<SocialNode> listnode =  Parcours.parcoursProfondeur(node,profondeur);
+					List<SocialNode> listnode =  Parcours.parcoursProfondeur(node,profondeur,cdt);
 					this.panelGraph.add((createGraph( listnode)));
 					this.frame.invalidate();
 					this.frame.validate();
@@ -211,7 +214,7 @@ public class Interface extends JFrame implements ActionListener {
 		}
 		else if("ajouterFiltre".equals(e.getActionCommand())) {
 			JOptionPaneFiltre filtrage = new JOptionPaneFiltre();
-			System.out.println(filtrage.getCondition().size());
+			cdt = filtrage.mapToConditon();
 			
 		}
 	}
