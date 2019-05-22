@@ -13,10 +13,13 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
@@ -43,6 +46,7 @@ public class Interface extends JFrame implements ActionListener {
 	 * @param args
 	 */
 	public Interface() {
+		this.sn = new SocialNetwork();
 		this.panelGraph = new JPanel();
 		this.panelRecherche = createToolbar(panelGraph);
 		this.panelRecherche.setVisible(false);
@@ -58,7 +62,8 @@ public class Interface extends JFrame implements ActionListener {
 		
 		this.frame.getContentPane().add(BorderLayout.SOUTH, panel);
 		this.frame.getContentPane().add(BorderLayout.NORTH, panelGraph);
-		this.frame.getContentPane().add(BorderLayout.EAST, panelRecherche);
+		this.frame.getContentPane().add(BorderLayout.CENTER, panelRecherche);
+		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 		
@@ -72,8 +77,7 @@ public class Interface extends JFrame implements ActionListener {
 		nom.setColumns(8);
 		panelToolbar.add(nomNoeud);
 		panelToolbar.add(nom);
-		panelToolbar.setSize(100,100);
-		
+		panelToolbar.setSize(200,200);
 		JRadioButton profondeur = new JRadioButton("Profondeur");
 		profondeur.setActionCommand("profondeur");
 		JRadioButton largeur = new JRadioButton("Largeur");
@@ -86,6 +90,15 @@ public class Interface extends JFrame implements ActionListener {
 		
 		JButton btn = new JButton("Rechercher");
 		btn.setActionCommand("Recherche");
+		
+		JLabel labelProfondeur = new JLabel("Niv. Profondeur :");
+		JSpinner textProfondeur = new JSpinner();
+		JComponent editor = textProfondeur.getEditor();
+		JFormattedTextField formatTextField = ((JSpinner.DefaultEditor) editor).getTextField();
+		formatTextField.setColumns(2);
+		
+		panelToolbar.add(labelProfondeur);
+		panelToolbar.add(textProfondeur);
 		
 		
 		largeur.addActionListener(this);
@@ -152,50 +165,57 @@ public class Interface extends JFrame implements ActionListener {
 			this.typeParcours = "pronfondeur";
 		}
 		else if("Recherche".equals(e.getActionCommand())) {
-			this.panelGraph.remove(0);
-			JTextField texte = (JTextField) this.panelRecherche.getComponent(1);
-			String nodeName = texte.getText();
-			System.out.println(nodeName);
-			SocialNode node = this.sn.getNodeByName(nodeName);
-			System.out.println(node);
-			ArrayList<SocialNode> listnode = (ArrayList<SocialNode>) Parcours.parcoursLargeur(node);
-			System.out.println(listnode.size());
-			this.panelGraph.add((createGraph((ArrayList<SocialNode>) listnode)));
-			this.frame.invalidate();
-			this.frame.validate();
-			this.frame.repaint();
+			if(typeParcours =="largeur") {
+				JTextField texte = (JTextField) this.panelRecherche.getComponent(1);
+				int profondeur = (int) ((JSpinner) this.panelRecherche.getComponent(3)).getValue();
+				System.out.println(profondeur);
+				String nodeName = texte.getText();
+				SocialNode node = this.sn.getNodeByName(nodeName);
+				if (node == null) {
+					JOptionPane jop3 = new JOptionPane();
+					jop3.showMessageDialog(null, "Le noeud "+nodeName+" n'existe pas.", "Erreur", JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					this.panelGraph.remove(0);
+					ArrayList<SocialNode> listnode = (ArrayList<SocialNode>) Parcours.parcoursLargeur(node);
+					this.panelGraph.add((createGraph((ArrayList<SocialNode>) listnode)));
+					this.frame.invalidate();
+					this.frame.validate();
+					this.frame.repaint();
+				}
+			}
 		}
 	}
 
 	private void readFile() {
 		// TODO Auto-generated method stub
+		SocialNetwork sN = new SocialNetwork();
 		JFileChooser choix = new JFileChooser();
 		int retour = choix.showOpenDialog(panel);
 		if (retour == JFileChooser.APPROVE_OPTION) {
-			// un fichier a été choisi (sortie par OK)
-			// nom du fichier choisi
-			choix.getSelectedFile().getName();
-			// chemin absolu du fichier choisi
-			String path = choix.getSelectedFile().getAbsolutePath();
-			SocialNetwork sN = null;
 			try {
+				String path = choix.getSelectedFile().getAbsolutePath();
 				InputStream flux = new FileInputStream(path);
 				InputStreamReader lecture = new InputStreamReader(flux);
 				BufferedReader buff = new BufferedReader(lecture);
 				String ligne = buff.readLine();
+				buff.close();
+				lecture.close();
+				flux.close();
+				
 				sN = JsonConverter.getSocialNetwork(ligne);
 				this.sn = sN;
 			} catch (Exception e1) {
-				e1.printStackTrace();
+				JOptionPane jop3 = new JOptionPane();
+				jop3.showMessageDialog(null, "Le fichier n'est pas valide.", "Erreur", JOptionPane.ERROR_MESSAGE);
+				return;
 			}
-			;
 			this.panelGraph.setSize(800, 800);
 			this.panelGraph.add(createGraph(sN.getSocialNetwork()));
 			this.panelRecherche.setVisible(true);
 			this.frame.invalidate();
 			this.frame.validate();
 			this.frame.repaint();
-		} else
-			;// pas de fichier choisi
+		}
 	}
 }
