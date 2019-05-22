@@ -8,10 +8,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.junit.Before;
 import org.junit.Test;
 
-import JSON.JsonConverter;
-import JSON.JsonLink;
+import json.JsonConverter;
+import json.JsonLink;
 import reseauSocial.dataFormat.Link;
 import reseauSocial.dataFormat.LinkProperty;
 import reseauSocial.dataFormat.SocialNetwork;
@@ -19,6 +20,20 @@ import reseauSocial.dataFormat.SocialNode;
 
 public class DataFormatTest 
 {
+	private SocialNetwork sNw;
+	
+	@Before
+	public void initialize() throws IOException
+	{
+		File file = new File("files/graphetest.txt");
+		BufferedReader br = new BufferedReader(new FileReader(file)); 
+		String json;
+		json = br.readLine();
+		br.close();
+		
+		sNw = JsonConverter.getSocialNetwork(json);
+	}
+	
 	//Tests about java objects
 	//LinkProperty
 	@Test
@@ -60,29 +75,6 @@ public class DataFormatTest
 		assertEquals(first.toString(), second.toString());
 	}
 	
-	/* /!\ Do no implement infinite recursion when converted /!\ 
-	//SocialNetwork
-	@Test
-	public void socialNetworkConvertionTest() throws IOException 
-	{
-		SocialNetwork first = new SocialNetwork();
-		
-		ArrayList<LinkProperty> alLinkProp = new ArrayList<LinkProperty>();
-		SocialNode startingNode = new SocialNode("Départ");
-		SocialNode endingNode = new SocialNode("Arrivé");
-		Link link = new Link("premier lien", alLinkProp, startingNode, endingNode);
-		startingNode.addLink(link);
-		endingNode.addLink(link);
-		first.addNode(startingNode);
-		first.addNode(endingNode);
-		
-		//String json = JsonConverter.convert(first);
-		
-		//SocialNetwork second = JsonConverter.getSocialNetwork(json);
-		
-		assertEquals(1,1);
-	}*/
-	
 	//Tests about JSON objects
 	@Test
 	public void jsonLinkPropertyConvertionTest() throws IOException 
@@ -101,14 +93,6 @@ public class DataFormatTest
 	@Test
 	public void jsonNoeudDepartTest() throws IOException
 	{
-		File file = new File("files/graphetest.txt");
-		BufferedReader br = new BufferedReader(new FileReader(file)); 
-		String json ="";
-		json = br.readLine();
-		br.close();
-		
-		SocialNetwork sNw = JsonConverter.getSocialNetwork(json);
-		
 		SocialNode sn = sNw.getSocialNetwork().get(2);
 		SocialNode sn2 = sNw.getSocialNetwork().get(0);
 		
@@ -118,14 +102,6 @@ public class DataFormatTest
 	@Test
 	public void jsonNoeudArriveTest() throws IOException
 	{
-		File file = new File("files/graphetest.txt");
-		BufferedReader br = new BufferedReader(new FileReader(file)); 
-		String json ="";
-		json = br.readLine();
-		br.close();
-		
-		SocialNetwork sNw = JsonConverter.getSocialNetwork(json);
-		
 		SocialNode sn = sNw.getSocialNetwork().get(2);
 		
 		assertEquals(sn.toString(), sn.getLinkList().get(0).getNoeudArrive().toString());
@@ -134,18 +110,15 @@ public class DataFormatTest
 	@Test
 	public void getNodeByNameTest() throws IOException
 	{
+
 		File file = new File("files/graphetest.txt");
 		BufferedReader br = new BufferedReader(new FileReader(file)); 
 		String json ="";
 		json = br.readLine();
 		br.close();
 		
-
-
 		SocialNetwork sNw = JsonConverter.getSocialNetwork(json);
-		
-		assertEquals(sNw.getNodeByName("4").getName(), "4");
-
+		assertEquals("4", sNw.getNodeByName("4").getName());
 
 	}
 }

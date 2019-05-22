@@ -1,15 +1,16 @@
 package reseauSocial.dataFormat;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SocialNode {
 	private String name;
-	private ArrayList<Link> linkList;
+	private List<Link> linkList;
 	//private Type type; To uncomment if types are implemented
 	
 	public SocialNode() {}
 	
-	public SocialNode(String name, ArrayList<Link> linkList) 
+	public SocialNode(String name, List<Link> linkList) 
 	{
 		this.name = name;
 		this.linkList = linkList;
@@ -30,11 +31,11 @@ public class SocialNode {
 	{
 		this.name = name;
 	}
-	public ArrayList<Link> getLinkList() 
+	public List<Link> getLinkList() 
 	{
 		return linkList;
 	}
-	public void setLinkList(ArrayList<Link> linkList) 
+	public void setLinkList(List<Link> linkList) 
 	{
 		this.linkList = linkList;
 	}
@@ -60,22 +61,25 @@ public class SocialNode {
 		if (getClass() != obj.getClass())
 			return false;
 		SocialNode other = (SocialNode) obj;
-		if (name == null) {
+		if (name == null) 
+		{
 			if (other.name != null)
 				return false;
-		} else if (!name.equals(other.name))
+		}
+		else if (!name.equals(other.name))
 			return false;
 		return true;
 	}
 
 	public String toString() {
-		String str = "SocialNode [name=" + name + ", linkList=";
+		StringBuilder bld = new StringBuilder();
+		bld.append("SocialNode [name=" + name + ", linkList=");
 		
 		for(Link link : linkList)
-			str += link.toString() + ", ";
+			bld.append( link.toString() + ", ");
 		
-		str +=  "]";
-		return str;
+		bld.append( "]");
+		return bld.toString();
 	}
 
 }

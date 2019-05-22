@@ -1,11 +1,12 @@
 package reseauSocial.dataFormat;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Link {
 	
 	private String linkName;
-	private ArrayList<LinkProperty> properties;
+	private List<LinkProperty> properties;
 	private SocialNode noeudDepart;
 	private SocialNode noeudArrive;
 	
@@ -25,10 +26,10 @@ public class Link {
 	public void setLinkName(String linkName) {
 		this.linkName = linkName;
 	}
-	public ArrayList<LinkProperty> getProperties() {
+	public List<LinkProperty> getProperties() {
 		return properties;
 	}
-	public void setProperties(ArrayList<LinkProperty> properties) {
+	public void setProperties(List<LinkProperty> properties) {
 		this.properties = properties;
 	}
 	public SocialNode getNoeudDepart() {
@@ -46,13 +47,14 @@ public class Link {
 	
 	@Override
 	public String toString() {
-		String str =  "Link [linkName=" + linkName + ", properties=";
+		StringBuilder bld = new StringBuilder();
+		bld.append("Link [linkName=" + linkName + ", properties=");
 		
 		for(LinkProperty link : properties)
-			str += link.toString() + ", ";
+			bld.append( link.toString() + ", ");
 		
-		str += ", noeudDepart=" + noeudDepart.getName()
-				+ ", noeudArrive=" + noeudArrive.getName() + "]";
-		return str;
+		bld.append( ", noeudDepart=" + noeudDepart.getName()
+				+ ", noeudArrive=" + noeudArrive.getName() + "]");
+		return bld.toString();
 	}
 }
