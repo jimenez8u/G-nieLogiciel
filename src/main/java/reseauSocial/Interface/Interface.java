@@ -168,7 +168,6 @@ public class Interface extends JFrame implements ActionListener {
 			if(typeParcours =="largeur") {
 				JTextField texte = (JTextField) this.panelRecherche.getComponent(1);
 				int profondeur = (int) ((JSpinner) this.panelRecherche.getComponent(3)).getValue();
-				System.out.println(profondeur);
 				String nodeName = texte.getText();
 				SocialNode node = this.sn.getNodeByName(nodeName);
 				if (node == null) {
@@ -177,7 +176,7 @@ public class Interface extends JFrame implements ActionListener {
 				}
 				else {
 					this.panelGraph.remove(0);
-					ArrayList<SocialNode> listnode = (ArrayList<SocialNode>) Parcours.parcoursLargeur(node);
+					ArrayList<SocialNode> listnode = (ArrayList<SocialNode>) Parcours.parcoursLargeur(node,profondeur);
 					this.panelGraph.add((createGraph((ArrayList<SocialNode>) listnode)));
 					this.frame.invalidate();
 					this.frame.validate();
