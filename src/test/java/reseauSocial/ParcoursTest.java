@@ -119,7 +119,6 @@ class ParcoursTest {
 		result = Arrays.asList(s1,s2,s5,s8);
 		listTest = Parcours.parcoursLargeur(sN2.getSocialNetwork().get(index2),1);
 		assertEquals(result, listTest);
-
 	}
 
 	
