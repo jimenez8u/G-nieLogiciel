@@ -1,26 +1,27 @@
 package reseauSocial.dataFormat;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SocialNetwork {
-	private ArrayList<SocialNode> socialNetwork;
+	private List<SocialNode> socialNodeList;
 	private int nbNode;
 
 	public SocialNetwork() {
-		this.socialNetwork = new ArrayList<SocialNode>();
+		this.socialNodeList = new ArrayList<SocialNode>();
 		this.nbNode = 0;
 	}
 	
 	public void addNode(SocialNode node)
 	{
-		this.socialNetwork.add(node);
+		this.socialNodeList.add(node);
 		this.nbNode++;
 	}
-	public ArrayList<SocialNode> getSocialNetwork() {
-		return socialNetwork;
+	public List<SocialNode> getSocialNetwork() {
+		return socialNodeList;
 	}
-	public void setSocialNetwork(ArrayList<SocialNode> socialNetwork) {
-		this.socialNetwork = socialNetwork;
+	public void setSocialNetwork(List<SocialNode> socialNetwork) {
+		this.socialNodeList = socialNetwork;
 	}
 	public int getNbNode() {
 		return nbNode;
@@ -31,19 +32,20 @@ public class SocialNetwork {
 
 	@Override
 	public String toString() {
-		String str = "SocialNetwork [socialNetwork=";
+		StringBuilder bld = new StringBuilder();
+		bld.append("SocialNetwork [socialNetwork=");
 		
-		for(SocialNode node : socialNetwork)
-			str += node.toString() + ", ";
+		for(SocialNode node : socialNodeList)
+			bld.append(node.toString() + ", ");
 		
-		str += ", nbNode=" + nbNode + "]";
-		return str;
+		bld.append(", nbNode=" + nbNode + "]");
+		return bld.toString();
 	
 	}
 	
 	public SocialNode getNodeByName(String name)
 	{
-		for(SocialNode node : this.socialNetwork)
+		for(SocialNode node : this.socialNodeList)
 		{
 			if(node.getName().equals(name))
 			{
