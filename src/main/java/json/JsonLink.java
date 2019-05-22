@@ -1,24 +1,24 @@
-package JSON;
+package json;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import reseauSocial.dataFormat.LinkProperty;
-import reseauSocial.dataFormat.SocialNode;
 
 public class JsonLink {
 	private String linkName;
-	private ArrayList<LinkProperty> properties;
+	private List<LinkProperty> properties;
 	private String noeudDepart;
 	private String noeudArrive;
 	
 	public JsonLink() {}
 	
-	public JsonLink(String linkName, ArrayList<LinkProperty> properties, String noeudDepart, String noeudArrive) {
-		this.properties = new ArrayList<LinkProperty>();
+	public JsonLink(String linkName, List<LinkProperty> properties, String depart, String arrive) {
+		this.properties = new ArrayList<>();
 		this.linkName = linkName;
 		this.properties = properties;
-		this.noeudDepart = noeudDepart;
-		this.noeudArrive = noeudArrive;
+		this.noeudDepart = depart;
+		this.noeudArrive = arrive;
 	}
 	
 	public String getLinkName() {
@@ -27,10 +27,10 @@ public class JsonLink {
 	public void setLinkName(String linkName) {
 		this.linkName = linkName;
 	}
-	public ArrayList<LinkProperty> getProperties() {
+	public List<LinkProperty> getProperties() {
 		return properties;
 	}
-	public void setProperties(ArrayList<LinkProperty> properties) {
+	public void setProperties(List<LinkProperty> properties) {
 		this.properties = properties;
 	}
 	public String getNoeudDepart() {
@@ -48,13 +48,14 @@ public class JsonLink {
 
 	@Override
 	public String toString() {
-		String str = "JsonLink [linkName=" + linkName + ", properties=[";
+		StringBuilder bld = new StringBuilder();
+		bld.append("JsonLink [linkName=" + linkName + ", properties=[");
 		
 		for(LinkProperty link : properties)
-			str += link.toString() + ", ";
+			bld.append(link.toString() + ", ");
 		
-		str += "], noeudDepart=" + noeudDepart
-				+ ", noeudArrive=" + noeudArrive + "]";
-		return str;
+		bld.append("], noeudDepart=" + noeudDepart
+				+ ", noeudArrive=" + noeudArrive + "]");
+		return bld.toString();
 	}
 }

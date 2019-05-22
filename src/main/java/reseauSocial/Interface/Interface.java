@@ -27,7 +27,7 @@ import javax.swing.JTextField;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 
-import JSON.JsonConverter;
+import json.JsonConverter;
 import reseauSocial.dataFormat.Link;
 import reseauSocial.dataFormat.SocialNetwork;
 import reseauSocial.dataFormat.SocialNode;
