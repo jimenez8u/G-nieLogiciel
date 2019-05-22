@@ -6,15 +6,20 @@ package reseauSocial.Interface;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.*;
 
+import reseauSocial.dataFormat.LinkProperty;
+import reseauSocial.parcours.Condition;
+
 class JOptionPaneFiltre {
-	private List<String> condition;
+	private Map<String,List<LinkProperty>> condition;
 	private JOptionPaneFiltre prochainFiltre;
     public JOptionPaneFiltre() {
-    	this.condition = new ArrayList<String>();
+    	this.condition = new HashMap<>();
         String[] items = {"Filtre 1"};
         JComboBox<String> combo = new JComboBox<>(items);
         JTextField field1 = new JTextField();
@@ -35,14 +40,23 @@ class JOptionPaneFiltre {
         	String nom = field1.getText();
             String prop = field2.getText();
             String propValue = field3.getText();
-            this.condition.add(nom+" : "+ prop + " : " + propValue);
+            if(prop.equals("")) {
+            	prop = null;
+            }
+            if(propValue .equals("")) {
+            	propValue = null;
+            }
+            ArrayList<LinkProperty> listprop = new ArrayList<>();
+            LinkProperty lp = new LinkProperty(prop,propValue);
+            listprop.add(lp);
+            condition.put(nom, listprop);
             this.prochainFiltre = new JOptionPaneFiltre(this.condition);
         } else {
             System.out.println("Cancelled");
         }
     }
     
-    public JOptionPaneFiltre(List<String> condition) {
+    public JOptionPaneFiltre(Map<String,List<LinkProperty>> condition) {
     	this.condition = condition;
         String[] items = {"Filtre "+(condition.size()+1)};
         JComboBox<String> combo = new JComboBox<>(items);
@@ -64,7 +78,21 @@ class JOptionPaneFiltre {
         	String nom = field1.getText();
             String prop = field2.getText();
             String propValue = field3.getText();
-            this.condition.add(nom+" : "+ prop + " : " + propValue);
+            if(prop.equals("")) {
+            	prop = null;
+            }
+            if(propValue .equals("")) {
+            	propValue = null;
+            }
+            LinkProperty lp = new LinkProperty(prop,propValue);
+            if(this.condition.containsKey(nom)) {
+            	this.condition.get(nom).add(lp);
+            }
+            else {
+            	ArrayList<LinkProperty> listprop = new ArrayList<>();
+            	listprop.add(lp);
+            	condition.put(nom, listprop);
+            }
             this.prochainFiltre = new JOptionPaneFiltre(this.condition);
             
         } else {
@@ -72,15 +100,23 @@ class JOptionPaneFiltre {
         }
     }
 
-	public List<String> getCondition() {
+	public Map<String, List<LinkProperty>> getCondition() {
 		return condition;
 	}
 
-	public void setCondition(List<String> condition) {
+	public void setCondition(Map<String, List<LinkProperty>> condition) {
 		this.condition = condition;
 	}
-    
-    
+
+
+    public List<Condition> mapToConditon(){
+    	List<Condition> cdt = new ArrayList<>();
+		this.condition.forEach((k,v) -> cdt.add(new Condition(k,v)));
+    	
+    	
+    	return cdt;
+    	
+    }
 
     
 }
