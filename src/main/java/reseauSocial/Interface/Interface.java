@@ -151,13 +151,15 @@ public class Interface extends JFrame implements ActionListener {
 		return graphComponent;
 	}
 
-
-
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if ("readFile".equals(e.getActionCommand())) {
-			readFile();
+			try {
+				readFile();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		else if("largeur".equals(e.getActionCommand())){
 			this.typeParcours = "largeur";
