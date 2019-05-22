@@ -93,29 +93,50 @@ class ParcoursTest {
 	@Test
 	void longueurOrdreTest() throws JsonParseException, JsonMappingException, IOException {
 		result = Arrays.asList(s1, s2, s3, s4, s5);
-		listTest = Parcours.parcoursProfondeur(sN1.getSocialNetwork().get(index1));
+		listTest = Parcours.parcoursProfondeur(sN1.getSocialNetwork().get(index1),100);
 		assertEquals(result, listTest);
 	}
 	
 	@Test
 	void longueurOrdreTest2() throws JsonParseException, JsonMappingException, IOException {
 		result = Arrays.asList(s1, s2, s3, s4, s5,s8,s9); 
-		listTest = Parcours.parcoursProfondeur(sN2.getSocialNetwork().get(index2));
+		listTest = Parcours.parcoursProfondeur(sN2.getSocialNetwork().get(index2),100);
 		assertEquals(result, listTest);
 	}
 	
 	@Test
-	void largeurProfondeurZero () {
+	void largeurDabordProfondeurZero () {
 		result = Arrays.asList(s1);
 		listTest = Parcours.parcoursLargeur(sN2.getSocialNetwork().get(index2),0);
 		assertEquals(result, listTest);
 	}
 	
 	@Test
-	void largeurProfondeurUn () {
+	void largeurDabordProfondeurUn () {
 		result = Arrays.asList(s1,s2,s5,s8);
 		listTest = Parcours.parcoursLargeur(sN2.getSocialNetwork().get(index2),1);
 		assertEquals(result, listTest);
 	}
 
+	
+	@Test
+	void ProfondeurDabordProfondeurZero() {
+		result = Arrays.asList(s1);
+		listTest = Parcours.parcoursProfondeur(sN2.getSocialNetwork().get(index2),0);
+		assertEquals(result, listTest);
+	}
+	
+	@Test
+	void ProfondeurDabordProfondeurUn() {
+		result = Arrays.asList(s1,s2,s5,s8);
+		listTest = Parcours.parcoursProfondeur(sN2.getSocialNetwork().get(index2),1);
+		assertEquals(result, listTest);
+	}
+	
+	@Test
+	void ProfondeurDabordProfondeurDeux() {
+		result = Arrays.asList(s1,s2,s3,s4,s5,s8,s9);
+		listTest = Parcours.parcoursProfondeur(sN2.getSocialNetwork().get(index2),2);
+		assertEquals(result, listTest);
+	}
 }
