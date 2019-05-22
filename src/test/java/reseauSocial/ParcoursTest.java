@@ -213,4 +213,15 @@ class ParcoursTest {
 		
 		assertTrue(Parcours.checkConditions(link, conditions));
 	}
+	
+	@Test
+	void testParcoursLargeurDabordCondition() {
+		result = Arrays.asList(s1,s2);
+		conditions.clear();
+		Condition condition = new Condition("l1", null);
+		conditions.add(condition);
+		listTest = Parcours.parcoursProfondeur(sN2.getSocialNetwork().get(index2),2,conditions);
+		assertEquals(result, listTest);
+	}
+	
 }
