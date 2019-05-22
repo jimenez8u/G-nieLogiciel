@@ -5,6 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -65,8 +68,6 @@ public class Interface extends JFrame implements ActionListener {
 		this.frame.getContentPane().add(BorderLayout.CENTER, panelRecherche);
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-
-		
 
 
 	private  JPanel createToolbar(JPanel panelGraph) {
@@ -165,11 +166,11 @@ public class Interface extends JFrame implements ActionListener {
 			this.typeParcours = "pronfondeur";
 		}
 		else if("Recherche".equals(e.getActionCommand())) {
+			JTextField texte = (JTextField) this.panelRecherche.getComponent(1);
+			int profondeur = (int) ((JSpinner) this.panelRecherche.getComponent(3)).getValue();
+			String nodeName = texte.getText();
+			SocialNode node = this.sn.getNodeByName(nodeName);
 			if(typeParcours =="largeur") {
-				JTextField texte = (JTextField) this.panelRecherche.getComponent(1);
-				int profondeur = (int) ((JSpinner) this.panelRecherche.getComponent(3)).getValue();
-				String nodeName = texte.getText();
-				SocialNode node = this.sn.getNodeByName(nodeName);
 				if (node == null) {
 					JOptionPane jop3 = new JOptionPane();
 					jop3.showMessageDialog(null, "Le noeud "+nodeName+" n'existe pas.", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -183,31 +184,43 @@ public class Interface extends JFrame implements ActionListener {
 					this.frame.repaint();
 				}
 			}
+			else {
+				if (node == null) {
+					JOptionPane jop3 = new JOptionPane();
+					jop3.showMessageDialog(null, "Le noeud "+nodeName+" n'existe pas.", "Erreur", JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					this.panelGraph.remove(0);
+					ArrayList<SocialNode> listnode = (ArrayList<SocialNode>) Parcours.parcoursProfondeur(node,profondeur);
+					this.panelGraph.add((createGraph((ArrayList<SocialNode>) listnode)));
+					this.frame.invalidate();
+					this.frame.validate();
+					this.frame.repaint();
+				}
+				
+			}
 		}
 	}
 
-	private void readFile() {
+	private void readFile() throws IOException {
 		// TODO Auto-generated method stub
 		SocialNetwork sN = new SocialNetwork();
 		JFileChooser choix = new JFileChooser();
 		int retour = choix.showOpenDialog(panel);
 		if (retour == JFileChooser.APPROVE_OPTION) {
+			String path = choix.getSelectedFile().getAbsolutePath();
+			BufferedReader buff = new BufferedReader(new FileReader(path));
 			try {
-				String path = choix.getSelectedFile().getAbsolutePath();
-				InputStream flux = new FileInputStream(path);
-				InputStreamReader lecture = new InputStreamReader(flux);
-				BufferedReader buff = new BufferedReader(lecture);
 				String ligne = buff.readLine();
-				buff.close();
-				lecture.close();
-				flux.close();
-				
 				sN = JsonConverter.getSocialNetwork(ligne);
 				this.sn = sN;
 			} catch (Exception e1) {
 				JOptionPane jop3 = new JOptionPane();
 				jop3.showMessageDialog(null, "Le fichier n'est pas valide.", "Erreur", JOptionPane.ERROR_MESSAGE);
 				return;
+			}
+			finally {
+				buff.close();
 			}
 			this.panelGraph.setSize(800, 800);
 			this.panelGraph.add(createGraph(sN.getSocialNetwork()));
