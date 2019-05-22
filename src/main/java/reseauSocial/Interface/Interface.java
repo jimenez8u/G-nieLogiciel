@@ -4,15 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -28,7 +25,6 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
-
 import json.JsonConverter;
 import reseauSocial.dataFormat.Link;
 import reseauSocial.dataFormat.SocialNetwork;
@@ -53,7 +49,7 @@ public class Interface extends JFrame implements ActionListener {
 	public Interface() {
 		this.sn = new SocialNetwork();
 		this.panelGraph = new JPanel();
-		this.panelRecherche = createToolbar(panelGraph);
+		this.panelRecherche = createToolbar();
 		this.panelRecherche.setVisible(false);
 		this.frame = new JFrame();
 		this.frame.setVisible(true);
@@ -72,8 +68,7 @@ public class Interface extends JFrame implements ActionListener {
 	}
 
 
-	private  JPanel createToolbar(JPanel panelGraph) {
-		// TODO Auto-generated method stub
+	private  JPanel createToolbar() {
 		JPanel panelToolbar = new JPanel();
 		JLabel nomNoeud = new JLabel("Noeud : ");
 		JTextField nom = new JTextField();
@@ -82,9 +77,9 @@ public class Interface extends JFrame implements ActionListener {
 		panelToolbar.add(nom);
 		panelToolbar.setSize(200,200);
 		JRadioButton profondeur = new JRadioButton("Profondeur");
-		profondeur.setActionCommand("profondeur");
+		profondeur.setActionCommand("parcoursProfondeur");
 		JRadioButton largeur = new JRadioButton("Largeur");
-		largeur.setActionCommand("largeur");
+		largeur.setActionCommand("parcoursLargeur");
 		largeur.setSelected(true);
 		ButtonGroup group = new ButtonGroup();
 		group.add(profondeur);
@@ -114,23 +109,24 @@ public class Interface extends JFrame implements ActionListener {
 		return panelToolbar;
 	}
 
-	public static HashMap<String, Object> addNodeToGraph(List<SocialNode> reseau, mxGraph graph) {
+	public static Map<String, Object> addNodeToGraph(List<SocialNode> reseau, mxGraph graph) {
 		Object parent = graph.getDefaultParent();
-		HashMap<String, Object> nodeMap = new HashMap<String, Object>();
+		Map<String, Object> nodeMap = new HashMap<>();
 		for (SocialNode sn : reseau) {
-			nodeMap.put(sn.getName(), graph.insertVertex(parent, null, sn.getName(), (int) (Math.random() * 800),
-					(int) (Math.random() * 400), 80, 30));
+			Random r = new Random();
+			nodeMap.put(sn.getName(), graph.insertVertex(parent, null, sn.getName(), r.nextInt(800),
+					r.nextInt(400), 80, 30));
 		}
 		return nodeMap;
 	}
 
-	public static void addLinkToGraph(List<SocialNode> reseau, HashMap<String, Object> nodeMap, mxGraph graph) {
+	public static void addLinkToGraph(List<SocialNode> reseau, Map<String, Object> nodeMap, mxGraph graph) {
 		Object parent = graph.getDefaultParent();
 		for (SocialNode sn : reseau) {
 			if (sn.getLinkList() != null) {
 				for (Link l : sn.getLinkList()) {
 					if (l.getNoeudDepart().equals(sn)) {
-						Object lien = graph.insertEdge(parent, null, l.getLinkName() + "\n" + l.getProperties(),
+						graph.insertEdge(parent, null, l.getLinkName() + "\n" + l.getProperties(),
 								nodeMap.get(l.getNoeudDepart().getName()), nodeMap.get(l.getNoeudArrive().getName()));
 					}
 				}
@@ -141,7 +137,7 @@ public class Interface extends JFrame implements ActionListener {
 	public static JComponent createGraph(List<SocialNode> reseau) {
 		mxGraph graph = new mxGraph();
 		graph.getModel().beginUpdate();
-		HashMap<String, Object> nodeMap = addNodeToGraph(reseau, graph);
+		Map<String, Object> nodeMap = addNodeToGraph(reseau, graph);
 		addLinkToGraph(reseau, nodeMap, graph);
 		graph.getModel().endUpdate();
 		mxGraphComponent graphComponent = new mxGraphComponent(graph);
@@ -159,14 +155,13 @@ public class Interface extends JFrame implements ActionListener {
 			try {
 				readFile();
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
-		else if("largeur".equals(e.getActionCommand())){
+		else if("parcoursLargeur".equals(e.getActionCommand())){
 			this.typeParcours = "largeur";
 		}
-		else if("profondeur".equals(e.getActionCommand())){
+		else if("parcoursProfondeur".equals(e.getActionCommand())){
 			this.typeParcours = "pronfondeur";
 		}
 		else if("Recherche".equals(e.getActionCommand())) {
@@ -174,10 +169,9 @@ public class Interface extends JFrame implements ActionListener {
 			int profondeur = (int) ((JSpinner) this.panelRecherche.getComponent(3)).getValue();
 			String nodeName = texte.getText();
 			SocialNode node = this.sn.getNodeByName(nodeName);
-			if(typeParcours =="largeur") {
+			if(typeParcours.equals("largeur")) {
 				if (node == null) {
-					JOptionPane jop3 = new JOptionPane();
-					jop3.showMessageDialog(null, "Le noeud "+nodeName+" n'existe pas.", "Erreur", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Le noeud "+nodeName+" n'existe pas.", "Erreur de noeud", JOptionPane.ERROR_MESSAGE);
 				}
 				else {
 					this.panelGraph.remove(0);
@@ -190,8 +184,7 @@ public class Interface extends JFrame implements ActionListener {
 			}
 			else {
 				if (node == null) {
-					JOptionPane jop3 = new JOptionPane();
-					jop3.showMessageDialog(null, "Le noeud "+nodeName+" n'existe pas.", "Erreur", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Le noeud "+nodeName+" n'existe pas.", "Erreur de noeud", JOptionPane.ERROR_MESSAGE);
 				}
 				else {
 					this.panelGraph.remove(0);
@@ -207,7 +200,6 @@ public class Interface extends JFrame implements ActionListener {
 	}
 
 	private void readFile() throws IOException {
-		// TODO Auto-generated method stub
 		SocialNetwork sN = new SocialNetwork();
 		JFileChooser choix = new JFileChooser();
 		int retour = choix.showOpenDialog(panel);
