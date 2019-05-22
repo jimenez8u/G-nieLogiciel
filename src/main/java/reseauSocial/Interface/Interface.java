@@ -35,11 +35,11 @@ public class Interface extends JFrame implements ActionListener {
 
 	/** Pour éviter un warning venant du JFrame */
 	private static final long serialVersionUID = -8123406571694511514L;
-	public JPanel panelGraph;
-	public JPanel panelRecherche;
-	public JPanel panel;
-	public JFrame frame;
-	public String typeParcours = "largeur";
+	private JPanel panelGraph;
+	private JPanel panelRecherche;
+	private JPanel panel;
+	private JFrame frame;
+	private String typeParcours = "largeur";
 	private SocialNetwork sn;
 
 
@@ -112,8 +112,8 @@ public class Interface extends JFrame implements ActionListener {
 	public static Map<String, Object> addNodeToGraph(List<SocialNode> reseau, mxGraph graph) {
 		Object parent = graph.getDefaultParent();
 		Map<String, Object> nodeMap = new HashMap<>();
+		Random r = new Random();
 		for (SocialNode sn : reseau) {
-			Random r = new Random();
 			nodeMap.put(sn.getName(), graph.insertVertex(parent, null, sn.getName(), r.nextInt(800),
 					r.nextInt(400), 80, 30));
 		}
@@ -211,8 +211,7 @@ public class Interface extends JFrame implements ActionListener {
 				sN = JsonConverter.getSocialNetwork(ligne);
 				this.sn = sN;
 			} catch (Exception e1) {
-				JOptionPane jop3 = new JOptionPane();
-				jop3.showMessageDialog(null, "Le fichier n'est pas valide.", "Erreur", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Le fichier n'est pas valide.", "Erreur fichier", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			finally {
