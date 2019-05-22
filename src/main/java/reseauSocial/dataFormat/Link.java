@@ -12,8 +12,8 @@ public class Link {
 	
 	public Link() {}
 	
-	public Link(String linkName, ArrayList<LinkProperty> properties, SocialNode noeudDepart, SocialNode noeudArrive) {
-		this.properties = new ArrayList<LinkProperty>();
+	public Link(String linkName, List<LinkProperty> properties, SocialNode noeudDepart, SocialNode noeudArrive) {
+		this.properties = new ArrayList<>();
 		this.linkName = linkName;
 		this.properties = properties;
 		this.noeudDepart = noeudDepart;

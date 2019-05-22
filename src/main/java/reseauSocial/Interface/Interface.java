@@ -12,6 +12,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -112,7 +114,7 @@ public class Interface extends JFrame implements ActionListener {
 		return panelToolbar;
 	}
 
-	public static HashMap<String, Object> addNodeToGraph(ArrayList<SocialNode> reseau, mxGraph graph) {
+	public static HashMap<String, Object> addNodeToGraph(List<SocialNode> reseau, mxGraph graph) {
 		Object parent = graph.getDefaultParent();
 		HashMap<String, Object> nodeMap = new HashMap<String, Object>();
 		for (SocialNode sn : reseau) {
@@ -122,7 +124,7 @@ public class Interface extends JFrame implements ActionListener {
 		return nodeMap;
 	}
 
-	public static void addLinkToGraph(ArrayList<SocialNode> reseau, HashMap<String, Object> nodeMap, mxGraph graph) {
+	public static void addLinkToGraph(List<SocialNode> reseau, HashMap<String, Object> nodeMap, mxGraph graph) {
 		Object parent = graph.getDefaultParent();
 		for (SocialNode sn : reseau) {
 			if (sn.getLinkList() != null) {
@@ -136,7 +138,7 @@ public class Interface extends JFrame implements ActionListener {
 		}
 	}
 
-	public static JComponent createGraph(ArrayList<SocialNode> reseau) {
+	public static JComponent createGraph(List<SocialNode> reseau) {
 		mxGraph graph = new mxGraph();
 		graph.getModel().beginUpdate();
 		HashMap<String, Object> nodeMap = addNodeToGraph(reseau, graph);
@@ -179,8 +181,8 @@ public class Interface extends JFrame implements ActionListener {
 				}
 				else {
 					this.panelGraph.remove(0);
-					ArrayList<SocialNode> listnode = (ArrayList<SocialNode>) Parcours.parcoursLargeur(node,profondeur);
-					this.panelGraph.add((createGraph((ArrayList<SocialNode>) listnode)));
+					List<SocialNode> listnode = Parcours.parcoursLargeur(node,profondeur);
+					this.panelGraph.add((createGraph(listnode)));
 					this.frame.invalidate();
 					this.frame.validate();
 					this.frame.repaint();
@@ -193,8 +195,8 @@ public class Interface extends JFrame implements ActionListener {
 				}
 				else {
 					this.panelGraph.remove(0);
-					ArrayList<SocialNode> listnode = (ArrayList<SocialNode>) Parcours.parcoursProfondeur(node,profondeur);
-					this.panelGraph.add((createGraph((ArrayList<SocialNode>) listnode)));
+					List<SocialNode> listnode =  Parcours.parcoursProfondeur(node,profondeur);
+					this.panelGraph.add((createGraph( listnode)));
 					this.frame.invalidate();
 					this.frame.validate();
 					this.frame.repaint();
