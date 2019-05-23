@@ -1,13 +1,13 @@
-package reseauSocial.parcours;
+package reseausocial.parcours;
 
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
-import reseauSocial.dataFormat.Link;
-import reseauSocial.dataFormat.LinkProperty;
-import reseauSocial.dataFormat.SocialNode;
+import reseausocial.dataformat.Link;
+import reseausocial.dataformat.LinkProperty;
+import reseausocial.dataformat.SocialNode;
 
 public class Parcours {
 	

@@ -1,4 +1,4 @@
-package reseauSocial.Interface;
+package reseausocial.interf;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -10,8 +10,8 @@ import java.util.Map;
 
 import javax.swing.*;
 
-import reseauSocial.dataFormat.LinkProperty;
-import reseauSocial.parcours.Condition;
+import reseausocial.dataformat.LinkProperty;
+import reseausocial.parcours.Condition;
 
 class JOptionPaneFiltre implements ActionListener {
 	private Map<String,List<LinkProperty>> condition;

@@ -1,4 +1,4 @@
-package reseauSocial.dataFormat;
+package reseausocial.dataformat;
 
 import java.util.ArrayList;
 import java.util.List;

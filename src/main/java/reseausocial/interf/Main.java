@@ -1,4 +1,4 @@
-package reseauSocial.Interface;
+package reseausocial.interf;
 
 public class Main {
 

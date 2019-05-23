@@ -1,8 +1,8 @@
-package reseauSocial.parcours;
+package reseausocial.parcours;
 
 import java.util.List;
 
-import reseauSocial.dataFormat.LinkProperty;
+import reseausocial.dataformat.LinkProperty;
 
 public class Condition {
 	@Override

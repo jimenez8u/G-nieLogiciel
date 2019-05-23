@@ -1,4 +1,4 @@
-package reseauSocial.dataFormat;
+package reseausocial.dataformat;
 
 public class LinkProperty {
 	private String propertyName;

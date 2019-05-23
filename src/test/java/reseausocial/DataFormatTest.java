@@ -1,4 +1,4 @@
-package reseauSocial;
+package reseausocial;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -13,10 +13,10 @@ import org.junit.Test;
 
 import json.JsonConverter;
 import json.JsonLink;
-import reseauSocial.dataFormat.Link;
-import reseauSocial.dataFormat.LinkProperty;
-import reseauSocial.dataFormat.SocialNetwork;
-import reseauSocial.dataFormat.SocialNode;
+import reseausocial.dataformat.Link;
+import reseausocial.dataformat.LinkProperty;
+import reseausocial.dataformat.SocialNetwork;
+import reseausocial.dataformat.SocialNode;
 
 public class DataFormatTest 
 {

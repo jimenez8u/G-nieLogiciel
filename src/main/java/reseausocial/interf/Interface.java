@@ -1,4 +1,4 @@
-package reseauSocial.Interface;
+package reseausocial.interf;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -29,11 +29,11 @@ import javax.swing.UnsupportedLookAndFeelException;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 import json.JsonConverter;
-import reseauSocial.dataFormat.Link;
-import reseauSocial.dataFormat.SocialNetwork;
-import reseauSocial.dataFormat.SocialNode;
-import reseauSocial.parcours.Condition;
-import reseauSocial.parcours.Parcours;
+import reseausocial.dataformat.Link;
+import reseausocial.dataformat.SocialNetwork;
+import reseausocial.dataformat.SocialNode;
+import reseausocial.parcours.Condition;
+import reseausocial.parcours.Parcours;
 
 public class Interface implements ActionListener {
 

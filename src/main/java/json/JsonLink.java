@@ -3,7 +3,7 @@ package json;
 import java.util.ArrayList;
 import java.util.List;
 
-import reseauSocial.dataFormat.LinkProperty;
+import reseausocial.dataformat.LinkProperty;
 
 public class JsonLink {
 	private String linkName;

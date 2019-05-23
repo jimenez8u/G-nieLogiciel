@@ -1,4 +1,4 @@
-package reseauSocial;
+package reseausocial;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,12 +19,12 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
 import json.JsonConverter;
-import reseauSocial.dataFormat.Link;
-import reseauSocial.dataFormat.LinkProperty;
-import reseauSocial.dataFormat.SocialNetwork;
-import reseauSocial.dataFormat.SocialNode;
-import reseauSocial.parcours.Condition;
-import reseauSocial.parcours.Parcours;
+import reseausocial.dataformat.Link;
+import reseausocial.dataformat.LinkProperty;
+import reseausocial.dataformat.SocialNetwork;
+import reseausocial.dataformat.SocialNode;
+import reseausocial.parcours.Condition;
+import reseausocial.parcours.Parcours;
 
 class ParcoursTest {
 

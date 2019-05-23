@@ -7,10 +7,10 @@ import java.util.List;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import reseauSocial.dataFormat.Link;
-import reseauSocial.dataFormat.LinkProperty;
-import reseauSocial.dataFormat.SocialNetwork;
-import reseauSocial.dataFormat.SocialNode;
+import reseausocial.dataformat.Link;
+import reseausocial.dataformat.LinkProperty;
+import reseausocial.dataformat.SocialNetwork;
+import reseausocial.dataformat.SocialNode;
 
 public class JsonConverter {
 	
