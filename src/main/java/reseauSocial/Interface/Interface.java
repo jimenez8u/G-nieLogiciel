@@ -224,6 +224,7 @@ public class Interface extends JFrame implements ActionListener {
 		}
 		else if("ajouterFiltre".equals(e.getActionCommand())) {
 			JOptionPaneFiltre filtrage = new JOptionPaneFiltre();
+			System.out.println(filtrage.getCondition().size());
 			cdt = filtrage.mapToConditon();
 			
 		}
