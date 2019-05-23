@@ -18,7 +18,6 @@ class JOptionPaneFiltre implements ActionListener {
 	private List<Condition> cdtList;
 	private JPanel suprFiltre;
 	private JFrame fenetreSupr;
-	public Object result;
     public JOptionPaneFiltre() {
     	this.condition = new HashMap<>();
     	this.condition = this.addFiltre(this.condition,1);
@@ -112,7 +111,6 @@ class JOptionPaneFiltre implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		this.cdtList.remove(Integer.parseInt(e.getActionCommand()));
 		this.suprFiltre.setVisible(false);
 		this.fenetreSupr.setVisible(false);

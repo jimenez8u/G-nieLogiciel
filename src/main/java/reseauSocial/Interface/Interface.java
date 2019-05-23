@@ -1,7 +1,6 @@
 package reseauSocial.Interface;
 
 import java.awt.BorderLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -36,7 +35,7 @@ import reseauSocial.dataFormat.SocialNode;
 import reseauSocial.parcours.Condition;
 import reseauSocial.parcours.Parcours;
 
-public class Interface extends JFrame implements ActionListener {
+public class Interface implements ActionListener {
 
 	/** Pour éviter un warning venant du JFrame */
 	private static Random r = new Random();
@@ -47,7 +46,7 @@ public class Interface extends JFrame implements ActionListener {
 	private JFrame frame;
 	private SocialNetwork sn;
 	private static Logger logger = Logger.getLogger(Interface.class.getName());
-	private static List<Condition> cdt = null;
+	private List<Condition> cdt = null;
 	private JOptionPaneFiltre filtrage;
 
 
@@ -198,61 +197,47 @@ public class Interface extends JFrame implements ActionListener {
 			int profondeur = (int) ((JSpinner) this.panelRecherche.getComponent(3)).getValue();
 			String nodeName = texte.getText();
 			SocialNode node = this.sn.getNodeByName(nodeName);
-			if(!isProfondeur) {
-				if (node == null) {
-					JOptionPane.showMessageDialog(null, "Le noeud "+nodeName+" n'existe pas.", "Erreur de noeud", JOptionPane.ERROR_MESSAGE);
-				}
-				else {
-					JFrame popup = new JFrame();
-					JPanel graph = new JPanel();
-					if(cdt.size()==0) {
-						cdt=null;
-					}
-					List<SocialNode> listnode = Parcours.parcoursLargeur(node,profondeur,cdt);
-					graph.add((createGraph(listnode)));
-					popup.getContentPane().add(BorderLayout.CENTER, graph);
-					popup.invalidate();
-					popup.validate();
-					popup.repaint();
-					popup.setSize(1200, 600);
-					popup.setVisible(true);
-				}
+			if (node == null) {
+				JOptionPane.showMessageDialog(null, "Le noeud "+nodeName+" n'existe pas.", "Erreur de noeud", JOptionPane.ERROR_MESSAGE);
 			}
 			else {
-				if (node == null) {
-					JOptionPane.showMessageDialog(null, "Le noeud "+nodeName+" n'existe pas.", "Erreur de noeud", JOptionPane.ERROR_MESSAGE);
+				JFrame popup = new JFrame();
+				JPanel graph = new JPanel();
+				if(cdt!=null && cdt.isEmpty()) {
+					cdt=null;
+				}
+				List<SocialNode> listnode;
+				if(isProfondeur) {
+					listnode = Parcours.parcoursProfondeur(node,profondeur,cdt);
 				}
 				else {
-					JFrame popup = new JFrame();
-					JPanel graph = new JPanel();
-					if(cdt.size()==0) {
-						cdt=null;
-					}
-					List<SocialNode> listnode = Parcours.parcoursLargeur(node,profondeur,cdt);
-					graph.add((createGraph(listnode)));
-					popup.getContentPane().add(BorderLayout.CENTER, graph);
-					popup.invalidate();
-					popup.validate();
-					popup.repaint();
-					popup.setSize(1200, 600);
-					popup.setVisible(true);
+					listnode = Parcours.parcoursLargeur(node,profondeur,cdt);
 				}
-				
+				graph.add((createGraph(listnode)));
+				popup.getContentPane().add(BorderLayout.CENTER, graph);
+				popup.invalidate();
+				popup.validate();
+				popup.repaint();
+				popup.setSize(1200, 600);
+				popup.setVisible(true);
 			}
 		}
 		else if("ajouterFiltre".equals(e.getActionCommand())) {
 			this.filtrage = new JOptionPaneFiltre();
 			cdt = filtrage.mapToConditon();
-			String str = "";
+			StringBuilder bld = new StringBuilder();
 			for (Condition filtre : cdt) {
-				str += filtre + "\n";
+				bld.append(filtre + "\n");
 			}
-			JOptionPane.showMessageDialog(null, str, "Vos filtres", JOptionPane.INFORMATION_MESSAGE);
+			if (cdt.isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Aucun filtre crée", "Vos filtres", JOptionPane.INFORMATION_MESSAGE);
+			}
+			else {
+			JOptionPane.showMessageDialog(null, bld.toString(), "Vos filtres", JOptionPane.INFORMATION_MESSAGE);
+			}
 		}
-		else if("retirerFiltre".equals(e.getActionCommand())) {
-			if(this.filtrage!=null) {
-				this.filtrage.retirerFiltre();
-			}
+		else if("retirerFiltre".equals(e.getActionCommand()) && this.filtrage != null) {
+			this.filtrage.retirerFiltre();
 		}
 	}
 
