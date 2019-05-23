@@ -20,6 +20,7 @@ class JOptionPaneFiltre implements ActionListener {
 	private JFrame fenetreSupr;
     public JOptionPaneFiltre() {
     	this.condition = new HashMap<>();
+    	this.cdtList = new ArrayList<>();
     	this.condition = this.addFiltre(this.condition,1);
     	this.cdtList = this.mapToConditon();
     }
@@ -46,9 +47,9 @@ class JOptionPaneFiltre implements ActionListener {
             String prop = field2.getText();
             String propValue = field3.getText();
             LinkProperty lp = new LinkProperty(prop,propValue);
-            if(this.condition.containsKey(nom)) {
+            if(condition.containsKey(nom)) {
             	if(!(prop.equals("") && propValue .equals(""))) {
-            		this.condition.get(nom).add(lp);
+            		condition.get(nom).add(lp);
             	}
             }
             else {
@@ -95,6 +96,7 @@ class JOptionPaneFiltre implements ActionListener {
     public List<Condition> mapToConditon(){
     	List<Condition> cdt = new ArrayList<>();
 		this.condition.forEach((k,v) -> cdt.add(new Condition(k,v)));
+		this.cdtList= cdt;
     	
     	
     	return cdt;
@@ -111,7 +113,8 @@ class JOptionPaneFiltre implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		this.cdtList.remove(Integer.parseInt(e.getActionCommand()));
+		Condition cdt =  this.cdtList.remove(Integer.parseInt(e.getActionCommand()));
+		this.condition.remove(cdt.getName());
 		this.suprFiltre.setVisible(false);
 		this.fenetreSupr.setVisible(false);
 		this.retirerFiltre();

@@ -37,9 +37,7 @@ import reseausocial.parcours.Parcours;
 
 public class Interface implements ActionListener {
 
-	/** Pour éviter un warning venant du JFrame */
 	private static Random r = new Random();
-	private static final long serialVersionUID = -8123406571694511514L;
 	private JPanel panelGraph;
 	private JPanel panelRecherche;
 	private JPanel panel;
@@ -82,68 +80,9 @@ public class Interface implements ActionListener {
 		this.frame.add(panelRecherche);
 		this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+	
+	//############### Fonctions de création d'interface ###############
 
-
-	private  JPanel createToolbar() {
-		JPanel panelToolbar = new JPanel();
-		JLabel nomNoeud = new JLabel("Noeud : ");
-		JTextField nom = new JTextField();
-		nom.setColumns(8);
-		panelToolbar.add(nomNoeud);
-		panelToolbar.add(nom);
-		panelToolbar.setSize(300,300);
-		JRadioButton profondeur = new JRadioButton("Profondeur");
-		profondeur.setActionCommand("parcoursProfondeur");
-		JRadioButton largeur = new JRadioButton("Largeur");
-		largeur.setActionCommand("parcoursLargeur");
-		largeur.setSelected(true);
-		ButtonGroup group = new ButtonGroup();
-		group.add(profondeur);
-		group.add(largeur);
-		
-		JButton btn = new JButton("Rechercher");
-		btn.setActionCommand("Recherche");
-		JLabel labelProfondeur = new JLabel("Niv. Profondeur :");
-		JSpinner textProfondeur = new JSpinner();
-		JComponent editor = textProfondeur.getEditor();
-		JFormattedTextField formatTextField = ((JSpinner.DefaultEditor) editor).getTextField();
-		formatTextField.setColumns(2);
-		
-		panelToolbar.add(labelProfondeur);
-		panelToolbar.add(textProfondeur);
-		
-		
-		largeur.addActionListener(this);
-		profondeur.addActionListener(this);
-		btn.addActionListener(this);
-		
-		JButton filtre = new JButton("Ajouter filtre");
-		filtre.setActionCommand("ajouterFiltre");
-		filtre.addActionListener(this);
-		
-		JButton retirerFiltre = new JButton("Retirer filtre");
-		retirerFiltre.setActionCommand("retirerFiltre");
-		retirerFiltre.addActionListener(this);
-		
-		panelToolbar.add(profondeur);
-		panelToolbar.add(largeur);
-		panelToolbar.add(filtre);
-		panelToolbar.add(retirerFiltre);
-		panelToolbar.add(btn);
-		/**
-		JPanel filtre = new JPanel();
-		JLabel labelLien1 = new JLabel("Lien 1 :");
-		JTextField textLien1 = new JTextField();
-		JLabel labelValeur1 = new JLabel("Valeur 1 :");
-		JTextField textValeur1 = new JTextField();
-		filtre.add(labelLien1);
-		filtre.add(textLien1);
-		filtre.add(labelValeur1);
-		filtre.add(textValeur1);
-		panelToolbar.add(filtre);
-		**/
-		return panelToolbar; 
-	}
 
 	public static Map<String, Object> addNodeToGraph(List<SocialNode> reseau, mxGraph graph) {
 		Object parent = graph.getDefaultParent();
@@ -181,7 +120,60 @@ public class Interface implements ActionListener {
 
 		return graphComponent;
 	}
+	
+	private  JPanel createToolbar() {
+		JPanel panelToolbar = new JPanel();
+		
+		JLabel nomNoeud = new JLabel("Noeud : ");
+		JTextField nom = new JTextField();
+		nom.setColumns(8);
+		
+		JRadioButton profondeur = new JRadioButton("Profondeur");
+		profondeur.setActionCommand("parcoursProfondeur");
+		
+		JRadioButton largeur = new JRadioButton("Largeur");
+		largeur.setActionCommand("parcoursLargeur");
+		largeur.setSelected(true);
+		
+		ButtonGroup group = new ButtonGroup();
+		group.add(profondeur);
+		group.add(largeur);
+		
+		JButton btn = new JButton("Rechercher");
+		btn.setActionCommand("Recherche");
+		JLabel labelProfondeur = new JLabel("Niv. Profondeur :");
+		
+		JSpinner textProfondeur = new JSpinner();
+		JComponent editor = textProfondeur.getEditor();
+		JFormattedTextField formatTextField = ((JSpinner.DefaultEditor) editor).getTextField();
+		formatTextField.setColumns(2);
+		
+		JButton filtre = new JButton("Ajouter filtre");
+		filtre.setActionCommand("ajouterFiltre");
+		
+		JButton retirerFiltre = new JButton("Retirer filtre");
+		retirerFiltre.setActionCommand("retirerFiltre");
+		
+		largeur.addActionListener(this);
+		profondeur.addActionListener(this);
+		btn.addActionListener(this);
+		filtre.addActionListener(this);
+		retirerFiltre.addActionListener(this);
+		
+		panelToolbar.add(nomNoeud);
+		panelToolbar.add(nom);
+		panelToolbar.add(labelProfondeur);
+		panelToolbar.add(textProfondeur);
+		panelToolbar.add(profondeur);
+		panelToolbar.add(largeur);
+		panelToolbar.add(filtre);
+		panelToolbar.add(retirerFiltre);
+		panelToolbar.add(btn);
+		
+		return panelToolbar; 
+	}
 
+	//############### Fonctions d'interaction avec l'interface ###############
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if ("readFile".equals(e.getActionCommand())) {
@@ -192,54 +184,70 @@ public class Interface implements ActionListener {
 			}
 		}
 		else if("Recherche".equals(e.getActionCommand())) {
-			boolean isProfondeur = ((JRadioButton) panelRecherche.getComponent(4)).isSelected();
-			JTextField texte = (JTextField) this.panelRecherche.getComponent(1);
-			int profondeur = (int) ((JSpinner) this.panelRecherche.getComponent(3)).getValue();
-			String nodeName = texte.getText();
-			SocialNode node = this.sn.getNodeByName(nodeName);
-			if (node == null) {
-				JOptionPane.showMessageDialog(null, "Le noeud "+nodeName+" n'existe pas.", "Erreur de noeud", JOptionPane.ERROR_MESSAGE);
-			}
-			else {
-				JFrame popup = new JFrame();
-				JPanel graph = new JPanel();
-				if(cdt!=null && cdt.isEmpty()) {
-					cdt=null;
-				}
-				List<SocialNode> listnode;
-				if(isProfondeur) {
-					listnode = Parcours.parcoursProfondeur(node,profondeur,cdt);
-				}
-				else {
-					listnode = Parcours.parcoursLargeur(node,profondeur,cdt);
-				}
-				graph.add((createGraph(listnode)));
-				popup.getContentPane().add(BorderLayout.CENTER, graph);
-				popup.invalidate();
-				popup.validate();
-				popup.repaint();
-				popup.setSize(1200, 600);
-				popup.setVisible(true);
-			}
+			faireRecherche();
 		}
 		else if("ajouterFiltre".equals(e.getActionCommand())) {
-			this.filtrage = new JOptionPaneFiltre();
-			cdt = filtrage.mapToConditon();
-			StringBuilder bld = new StringBuilder();
-			for (Condition filtre : cdt) {
-				bld.append(filtre + "\n");
-			}
-			if (cdt.isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Aucun filtre crée", "Vos filtres", JOptionPane.INFORMATION_MESSAGE);
-			}
-			else {
-			JOptionPane.showMessageDialog(null, bld.toString(), "Vos filtres", JOptionPane.INFORMATION_MESSAGE);
-			}
+			ajouterFiltre();
 		}
 		else if("retirerFiltre".equals(e.getActionCommand()) && this.filtrage != null) {
 			this.filtrage.retirerFiltre();
 		}
 	}
+
+	private void ajouterFiltre() {
+		if(filtrage == null) {
+			filtrage = new JOptionPaneFiltre();
+		}
+		else {
+			filtrage.setCondition(filtrage.addFiltre(filtrage.getCondition(), 1));
+		}
+		cdt = filtrage.mapToConditon();
+		StringBuilder bld = new StringBuilder();
+		for (Condition filtre : cdt) {
+			bld.append(filtre + "\n");
+		}
+		if (cdt.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Aucun filtre crée", "Vos filtres", JOptionPane.INFORMATION_MESSAGE);
+		}
+		else {
+		JOptionPane.showMessageDialog(null, bld.toString(), "Vos filtres", JOptionPane.INFORMATION_MESSAGE);
+		}
+	}
+
+
+	private void faireRecherche() {
+		boolean isProfondeur = ((JRadioButton) panelRecherche.getComponent(4)).isSelected();
+		JTextField texte = (JTextField) this.panelRecherche.getComponent(1);
+		int profondeur = (int) ((JSpinner) this.panelRecherche.getComponent(3)).getValue();
+		String nodeName = texte.getText();
+		SocialNode node = this.sn.getNodeByName(nodeName);
+		if (node == null) {
+			JOptionPane.showMessageDialog(null, "Le noeud "+nodeName+" n'existe pas.", "Erreur de noeud", JOptionPane.ERROR_MESSAGE);
+		}
+		else {
+			JFrame popup = new JFrame();
+			JPanel graph = new JPanel();
+			cdt = this.filtrage.getCdtList();
+			if(cdt!=null && cdt.isEmpty()) {
+				cdt=null;
+			}
+			List<SocialNode> listnode;
+			if(isProfondeur) {
+				listnode = Parcours.parcoursProfondeur(node,profondeur,cdt);
+			}
+			else {
+				listnode = Parcours.parcoursLargeur(node,profondeur,cdt);
+			}
+			graph.add((createGraph(listnode)));
+			popup.getContentPane().add(BorderLayout.CENTER, graph);
+			popup.invalidate();
+			popup.validate();
+			popup.repaint();
+			popup.setSize(1200, 600);
+			popup.setVisible(true);
+		}
+	}
+
 
 	private void readFile() throws IOException {
 		SocialNetwork sN = new SocialNetwork();
