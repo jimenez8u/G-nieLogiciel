@@ -11,7 +11,7 @@ import reseauSocial.dataFormat.SocialNode;
 
 public class Parcours {
 	
-	public Parcours()
+	private Parcours()
 	{
 		throw new IllegalStateException("Utility class");
 	}
@@ -25,7 +25,7 @@ public class Parcours {
 
 		for (Condition cond : conditions) {
 			if (cond.getName().equals(link.getLinkName())) {
-				if (cond.getProperties() == null || cond.getProperties().size() == 0) {
+				if (cond.getProperties() == null || cond.getProperties().isEmpty()) {
 					return true;
 				}
 				for (LinkProperty prop : cond.getProperties()) {
@@ -60,7 +60,7 @@ public class Parcours {
 
 		nbNoeudsEtage = noeudsSuivants.size();
 		SocialNode noeudSuivant;
-		while (noeudsSuivants.peekFirst() != null && profondeurRecherche > 0) {
+		while (!noeudsSuivants.isEmpty() && profondeurRecherche > 0) {
 			noeudSuivant = noeudsSuivants.pollFirst();
 
 			nbNoeudsEtage--;
@@ -124,7 +124,7 @@ public class Parcours {
 				}
 			}
 
-			while (noeudsSuivants.peekFirst() != null) {
+			while (!noeudsSuivants.isEmpty()) {
 
 				noeudsResult.addAll(
 						parcoursProfondeurRec(noeudsSuivants.pollFirst(), noeudsVisites, profondeurRecherche - 1,conditions));
