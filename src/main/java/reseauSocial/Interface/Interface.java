@@ -199,12 +199,16 @@ public class Interface extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, "Le noeud "+nodeName+" n'existe pas.", "Erreur de noeud", JOptionPane.ERROR_MESSAGE);
 				}
 				else {
-					this.panelGraph.remove(0);
+					JFrame popup = new JFrame();
+					JPanel graph = new JPanel();
 					List<SocialNode> listnode = Parcours.parcoursLargeur(node,profondeur,cdt);
-					this.panelGraph.add((createGraph(listnode)));
-					this.frame.invalidate();
-					this.frame.validate();
-					this.frame.repaint();
+					graph.add((createGraph(listnode)));
+					popup.getContentPane().add(BorderLayout.CENTER, graph);
+					popup.invalidate();
+					popup.validate();
+					popup.repaint();
+					popup.setSize(1200, 600);
+					popup.setVisible(true);
 				}
 			}
 			else {
@@ -212,21 +216,28 @@ public class Interface extends JFrame implements ActionListener {
 					JOptionPane.showMessageDialog(null, "Le noeud "+nodeName+" n'existe pas.", "Erreur de noeud", JOptionPane.ERROR_MESSAGE);
 				}
 				else {
-					this.panelGraph.remove(0);
-					List<SocialNode> listnode =  Parcours.parcoursProfondeur(node,profondeur,cdt);
-					this.panelGraph.add((createGraph( listnode)));
-					this.frame.invalidate();
-					this.frame.validate();
-					this.frame.repaint();
+					JFrame popup = new JFrame();
+					JPanel graph = new JPanel();
+					List<SocialNode> listnode = Parcours.parcoursLargeur(node,profondeur,cdt);
+					graph.add((createGraph(listnode)));
+					popup.getContentPane().add(BorderLayout.CENTER, graph);
+					popup.invalidate();
+					popup.validate();
+					popup.repaint();
+					popup.setSize(1200, 600);
+					popup.setVisible(true);
 				}
 				
 			}
 		}
 		else if("ajouterFiltre".equals(e.getActionCommand())) {
 			JOptionPaneFiltre filtrage = new JOptionPaneFiltre();
-			System.out.println(filtrage.getCondition().size());
 			cdt = filtrage.mapToConditon();
-			
+			String str = "";
+			for (Condition filtre : cdt) {
+				str += filtre + "\n";
+			}
+			JOptionPane.showMessageDialog(null, str, "Vos filtres", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 

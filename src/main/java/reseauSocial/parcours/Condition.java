@@ -5,6 +5,11 @@ import java.util.List;
 import reseauSocial.dataFormat.LinkProperty;
 
 public class Condition {
+	@Override
+	public String toString() {
+		return "Condition [name=" + name + ", properties=" + properties + "]";
+	}
+
 	private String name;
 	private List<LinkProperty> properties;
 	
