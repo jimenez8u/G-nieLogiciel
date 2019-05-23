@@ -8,7 +8,7 @@ public class SocialNetwork {
 	private int nbNode;
 
 	public SocialNetwork() {
-		this.socialNodeList = new ArrayList<SocialNode>();
+		this.socialNodeList = new ArrayList<>();
 		this.nbNode = 0;
 	}
 	

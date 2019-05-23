@@ -10,7 +10,12 @@ import reseauSocial.dataFormat.LinkProperty;
 import reseauSocial.dataFormat.SocialNode;
 
 public class Parcours {
-
+	
+	public Parcours()
+	{
+		throw new IllegalStateException("Utility class");
+	}
+	
 	public static boolean checkConditions(Link link, List<Condition> conditions) {
 		if (conditions == null) {
 			return true;
@@ -25,10 +30,9 @@ public class Parcours {
 				}
 				for (LinkProperty prop : cond.getProperties()) {
 					for (LinkProperty prop2 : lp) {
-						if (prop.getPropertyName().equals(prop2.getPropertyName())) {
-							if (prop.getPropertyValue().equals(prop2.getPropertyValue())) {
-								return true;
-							}
+						if (prop.getPropertyName().equals(prop2.getPropertyName()) &&
+								prop.getPropertyValue().equals(prop2.getPropertyValue())) {
+							return true;
 						}
 					}
 				}
