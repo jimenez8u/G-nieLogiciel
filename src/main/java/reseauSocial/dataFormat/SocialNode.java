@@ -19,7 +19,7 @@ public class SocialNode {
 	public SocialNode(String name) 
 	{
 		this.name = name;
-		this.linkList = new ArrayList<Link>();
+		this.linkList = new ArrayList<>();
 	}
 	
 	public String getName() 
