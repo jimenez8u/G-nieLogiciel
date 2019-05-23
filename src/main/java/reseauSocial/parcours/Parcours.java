@@ -20,7 +20,7 @@ public class Parcours {
 
 		for (Condition cond : conditions) {
 			if (cond.getName().equals(link.getLinkName())) {
-				if (cond.getProperties() == null) {
+				if (cond.getProperties() == null || cond.getProperties().size() == 0) {
 					return true;
 				}
 				for (LinkProperty prop : cond.getProperties()) {

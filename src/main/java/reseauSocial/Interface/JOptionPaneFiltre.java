@@ -1,9 +1,5 @@
 package reseauSocial.Interface;
 
-
-
-
-import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,22 +36,17 @@ class JOptionPaneFiltre {
         	String nom = field1.getText();
             String prop = field2.getText();
             String propValue = field3.getText();
-            if(prop.equals("")) {
-            	prop = null;
-            }
-            if(propValue .equals("")) {
-            	propValue = null;
-            }
+
+	        LinkProperty lp = new LinkProperty(prop,propValue);
             ArrayList<LinkProperty> listprop = new ArrayList<>();
-            LinkProperty lp = new LinkProperty(prop,propValue);
-            listprop.add(lp);
+            if(!prop.equals("") && !propValue .equals(""))
+            	listprop.add(lp);
             condition.put(nom, listprop);
             this.prochainFiltre = new JOptionPaneFiltre(this.condition);
-        } else {
-            System.out.println("Cancelled");
         }
+        else
+            System.out.println("Cancelled");
     }
-    
 
     public JOptionPaneFiltre(Map<String,List<LinkProperty>> condition) {
     	this.condition = condition;
@@ -79,24 +70,23 @@ class JOptionPaneFiltre {
         	String nom = field1.getText();
             String prop = field2.getText();
             String propValue = field3.getText();
-            if(prop.equals("")) {
-            	prop = null;
-            }
-            if(propValue .equals("")) {
-            	propValue = null;
-            }
             LinkProperty lp = new LinkProperty(prop,propValue);
             if(this.condition.containsKey(nom)) {
-            	this.condition.get(nom).add(lp);
+            	if(!(prop.equals("") && propValue .equals(""))) {
+            		this.condition.get(nom).add(lp);
+            	}
             }
             else {
             	ArrayList<LinkProperty> listprop = new ArrayList<>();
-            	listprop.add(lp);
+            	if(!(prop.equals("") && propValue .equals(""))) {
+            		listprop.add(lp);
+            	}
             	condition.put(nom, listprop);
             }
             this.prochainFiltre = new JOptionPaneFiltre(this.condition);
             
-        } else {
+        }
+        else {
             System.out.println("Cancelled");
         }
     }
