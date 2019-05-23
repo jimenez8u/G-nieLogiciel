@@ -48,6 +48,7 @@ public class Interface extends JFrame implements ActionListener {
 	private SocialNetwork sn;
 	private static Logger logger = Logger.getLogger(Interface.class.getName());
 	private static List<Condition> cdt = null;
+	private JOptionPaneFiltre filtrage;
 
 
 
@@ -59,8 +60,7 @@ public class Interface extends JFrame implements ActionListener {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 				| UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.severe("Style d'interface non reconnue");
 		}
 		this.sn = new SocialNetwork();
 		this.panelGraph = new JPanel();
@@ -122,10 +122,14 @@ public class Interface extends JFrame implements ActionListener {
 		filtre.setActionCommand("ajouterFiltre");
 		filtre.addActionListener(this);
 		
+		JButton retirerFiltre = new JButton("Retirer filtre");
+		retirerFiltre.setActionCommand("retirerFiltre");
+		retirerFiltre.addActionListener(this);
 		
 		panelToolbar.add(profondeur);
 		panelToolbar.add(largeur);
 		panelToolbar.add(filtre);
+		panelToolbar.add(retirerFiltre);
 		panelToolbar.add(btn);
 		/**
 		JPanel filtre = new JPanel();
@@ -201,6 +205,9 @@ public class Interface extends JFrame implements ActionListener {
 				else {
 					JFrame popup = new JFrame();
 					JPanel graph = new JPanel();
+					if(cdt.size()==0) {
+						cdt=null;
+					}
 					List<SocialNode> listnode = Parcours.parcoursLargeur(node,profondeur,cdt);
 					graph.add((createGraph(listnode)));
 					popup.getContentPane().add(BorderLayout.CENTER, graph);
@@ -218,6 +225,9 @@ public class Interface extends JFrame implements ActionListener {
 				else {
 					JFrame popup = new JFrame();
 					JPanel graph = new JPanel();
+					if(cdt.size()==0) {
+						cdt=null;
+					}
 					List<SocialNode> listnode = Parcours.parcoursLargeur(node,profondeur,cdt);
 					graph.add((createGraph(listnode)));
 					popup.getContentPane().add(BorderLayout.CENTER, graph);
@@ -231,13 +241,18 @@ public class Interface extends JFrame implements ActionListener {
 			}
 		}
 		else if("ajouterFiltre".equals(e.getActionCommand())) {
-			JOptionPaneFiltre filtrage = new JOptionPaneFiltre();
+			this.filtrage = new JOptionPaneFiltre();
 			cdt = filtrage.mapToConditon();
 			String str = "";
 			for (Condition filtre : cdt) {
 				str += filtre + "\n";
 			}
 			JOptionPane.showMessageDialog(null, str, "Vos filtres", JOptionPane.INFORMATION_MESSAGE);
+		}
+		else if("retirerFiltre".equals(e.getActionCommand())) {
+			if(this.filtrage!=null) {
+				this.filtrage.retirerFiltre();
+			}
 		}
 	}
 
